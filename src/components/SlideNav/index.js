@@ -1,6 +1,6 @@
 // == Import
 import './slidenav.css';
-import Card from "components/Card/Card";
+import HomeCard from "components/HomeCard/HomeCard";
 import PropTypesLib from "prop-types";
 import colorVariants from "data/colorVariants";
 
@@ -16,7 +16,7 @@ function SlideNav({data, bgColor, buttonsColor}) {
                     className='bg-white h-72 w-80 w-94 flex-shrink-0 shadow-[0_0_6px_0px_rgba(0,0,0,0.5)]' 
                     key={value}
                 >
-                    <Card
+                    <HomeCard
                         thumbnail="https://static1.mclcm.net/iod/images/v2/69/citytheque/localite_101_466/1200x630_100_300_000000x30x0.jpg"
                         title="Un titre de publication tout ce qu'il y a de plus commun en l'absence d'inspiration, pas mal non ?"
                         buttonColor={buttonsColor}

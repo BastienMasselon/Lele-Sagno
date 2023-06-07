@@ -6,7 +6,7 @@ import colorVariants from "data/colorVariants";
 
 
 // == Composant
-function Card({thumbnail, title, buttonColor}) {
+function HomeCard({thumbnail, title, buttonColor}) {
   return (
     <Link 
         className='flex flex-col items-center'
@@ -28,11 +28,11 @@ function Card({thumbnail, title, buttonColor}) {
   );
 }
 
-Card.propTypes = {
+HomeCard.propTypes = {
     thumbnail: PropTypesLib.string,
     title: PropTypesLib.string.isRequired,
     buttonColor: PropTypesLib.string,
 };
 
 // == Export
-export default Card;
+export default HomeCard;

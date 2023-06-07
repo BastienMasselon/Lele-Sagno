@@ -11,6 +11,7 @@ import Contact from 'components/Contact/Contact';
 import { useEffect } from 'react';
 import { fetchAllYoutubeVideos } from 'actions/apiData';
 import { useDispatch } from 'react-redux';
+import Recipes from 'components/Recipes/Recipes';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/videos" element={<Videos />} />
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
