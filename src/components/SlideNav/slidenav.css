@@ -1,0 +1,14 @@
+
+.scroll-nav::-webkit-scrollbar {
+    background-color:rgba(124, 124, 124, 0.5);
+    border-radius: 5px;
+    width: 0px;
+    height: 13px;
+}
+
+.scroll-nav::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(51, 51, 51, 0.4);
+    border-radius: 13px;
+}
+
+

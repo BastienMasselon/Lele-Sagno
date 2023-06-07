@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "BRANDON-LIGHT";
+    src: url("./assets/fonts/Brandon/Brandon_light.otf");
+}
+
+@font-face {
+    font-family: "BRANDON-MED";
+    src: url("./assets/fonts/Brandon/Brandon_med.otf");
+}
+
+@font-face {
+    font-family: "BRANDON-BLD";
+    src: url("./assets/fonts/Brandon/Brandon_bld.otf");
+}
