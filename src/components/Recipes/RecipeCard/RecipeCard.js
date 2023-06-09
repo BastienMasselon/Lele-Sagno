@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import PropTypesLib from 'prop-types';
 
 // == Composant
-function RecipeCard({ thumbnail, title, preparationTime}) {
+function RecipeCard({ thumbnail, title, preparationTime, recipeId}) {
   return (
     <Link
-        to='recipe/1'
-        className="mt-12 bg-lele-blue/10"
+        to={`/recipe/${recipeId}`}
+        className="mt-12 bg-lele-blue/5 rounded-xl"
     >
-      <div className='w-full'>
+      <div className='w-full '>
         <img 
         src={thumbnail} 
         alt="poilée de nouilles appétissante" 
-        className='object-cover h-60 w-full'
+        className='object-cover h-60 w-full rounded-t-xl'
         />
       </div>
-      <div className='p-3 border-l-8 border-lele-blue text-lele-blue'>
-        <p className='font-brandon-fat uppercase text-lg tracking-wide'>{title}</p>
+      <div className='p-3 border-l-8 border-lele-orange text-lele-orange rounded-b-xl'>
+        <p className='font-brandon-fat uppercase text-md tracking-wide'>{title}</p>
         <div className="flex items-center mt-3">
           <svg 
             viewBox="64.06 64.05 383.77 383.45"
@@ -34,6 +34,7 @@ RecipeCard.propTypes = {
   thumbnail: PropTypesLib.string.isRequired,
   title: PropTypesLib.string.isRequired,
   preparationTime: PropTypesLib.string.isRequired,
+  recipeId: PropTypesLib.number.isRequired,
 }
 // == Export
 export default RecipeCard;

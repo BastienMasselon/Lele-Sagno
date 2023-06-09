@@ -8,16 +8,16 @@ function Recipes() {
 
   return (
     <div className="flex flex-col px-4">
-
-        <p className='font-brandon-fat uppercase tracking-wider text-lele-orange text-center text-xl mt-8'>Tu es gourmand(e) comme moi ? Je te partage mes recettes préférées 😋</p>
+        <h1 className='font-brandon-fat uppercase tracking-wider text-lele-orange text-center text-xl mt-8'>Tu es gourmand(e) comme moi ? Je te partage mes recettes préférées 😋</h1>
       {
         arrayForLoop.map( (value) => 
             <RecipeCard
                 // should use recipe's id as key
                 key={value}
-                thumbnail={'https://www.recettethermomix.com/wp-content/uploads/2022/04/Nouilles-Sautees-aux-legumes-legeres-.jpg'}
+                thumbnail={'https://image.over-blog.com/Wixf7SBJeEE3O1TrCC40HIQaGCk=/filters:no_upscale()/image%2F0651923%2F20190201%2Fob_45741b_wok-legumes-croquants-nouilles-poul.jpg'}
                 title={"Nouilles sautées au poulet et aux légumes"}
                 preparationTime={"30 minutes"}
+                recipeId={value}
             />
         )
       }

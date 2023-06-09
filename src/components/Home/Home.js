@@ -23,9 +23,9 @@ function Home() {
           >
           </img>
         </div>
-        <p className='m-2 mt-4'>
+        <h1 className='m-2 mt-4'>
           Hello! My name is Lele Sagno, bienvenue dans mon monde! Ici je partage des idées, des recettes et tu peux aussi retrouver mes vidéos!
-        </p>
+        </h1>
       </section>
 
       {/* == Daily verse section == */}
