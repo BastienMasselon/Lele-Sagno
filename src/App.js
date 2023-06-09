@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Components
@@ -18,10 +18,25 @@ import Post from 'components/Post/Post';
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
   const dispatch = useDispatch();
+
+  // getting location 
+  const location = useLocation();
+
+  // using location in effect hook to scroll back to the top of the page every time the user switch pages
+  useEffect(
+    () => {
+      // scroll to top of the page
+      window.scrollTo(0, 0)
+    },
+    // specifying which change triggers the scroll
+    [location]
+  )
   
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
   }, []);
+
+
 
   return (
     <div className="App font-brandon flex flex-col min-h-screen justify-between">
