@@ -13,6 +13,7 @@ import Posts from 'components/Posts/Posts';
 import { useEffect } from 'react';
 import { fetchAllYoutubeVideos } from 'actions/apiData';
 import { useDispatch } from 'react-redux';
+import Post from 'components/Post/Post';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -34,6 +35,7 @@ function App() {
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/post/:id" element={<Post />} />
         </Routes>
       </main>
 

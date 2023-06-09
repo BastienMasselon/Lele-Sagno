@@ -75,7 +75,7 @@ function Home() {
           <SlideNav 
             data={i}
             bgColor={'lele-orange'}
-            buttonsColor={'lele-blue'}  
+            buttonsColor={'lele-blue'}
           />
       </section>
 

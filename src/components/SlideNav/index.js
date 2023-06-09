@@ -17,8 +17,8 @@ function SlideNav({data, bgColor, buttonsColor}) {
                     key={value}
                 >
                     <HomeCard
-                        thumbnail="https://static1.mclcm.net/iod/images/v2/69/citytheque/localite_101_466/1200x630_100_300_000000x30x0.jpg"
-                        title="Un titre de publication tout ce qu'il y a de plus commun en l'absence d'inspiration, pas mal non ?"
+                        thumbnail="https://www.state.gov/wp-content/uploads/2018/11/France-1980x1406.jpg"
+                        title="Non, partir en France ne va pas transformer ta vie en vie de rêve"
                         buttonColor={buttonsColor}
                     />
                 </div>
