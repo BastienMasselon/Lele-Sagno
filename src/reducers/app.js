@@ -17,7 +17,7 @@ function reducer(state = initialState, action = {}) {
             ...state,
             isBurgerOpen: !state.isBurgerOpen,
         };
-
+        
     case CLOSE_BURGER:
         return {
           ...state,
