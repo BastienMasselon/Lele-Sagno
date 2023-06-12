@@ -1,4 +1,4 @@
-import {TOGGLE_BURGER} from 'actions/app';
+import {CLOSE_BURGER, TOGGLE_BURGER} from 'actions/app';
 import { CHANGE_FIELD_VALUE } from 'actions/user';
 
 const initialState = {
@@ -18,12 +18,18 @@ function reducer(state = initialState, action = {}) {
             isBurgerOpen: !state.isBurgerOpen,
         };
 
+    case CLOSE_BURGER:
+        return {
+          ...state,
+          isBurgerOpen: false,
+        };
+
     // updating any form field value
     case CHANGE_FIELD_VALUE:
       return {
         ...state,
         [action.field]: action.value,
-      }
+      };
         
     default:
       return state;

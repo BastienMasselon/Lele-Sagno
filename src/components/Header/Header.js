@@ -3,18 +3,26 @@ import logoLele from 'assets/img/logo-LS.png';
 import burgerIcon from 'assets/img/icon-burger.svg';
 import closeBurgerIcon from 'assets/img/icon-burger-open.svg'
 
-import { toggleBurger } from 'actions/app';
+import { closeBurger, toggleBurger } from 'actions/app';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 
 // Dependencies
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // == Composant
 function Header() {
 
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
+  // closing burger menu when user switches page
+  useEffect(() => {
+    dispatch(closeBurger());
+  }, [pathname]);
+
+  // dispatching toggleBurger action when user taps on the burger menu icon
   function handleClickBurger() {
     dispatch(toggleBurger());
   };
