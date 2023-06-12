@@ -3,6 +3,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Components
+import { useEffect } from 'react';
+import { fetchAllYoutubeVideos } from 'actions/apiData';
+import { useDispatch } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Home from 'components/Home/Home';
@@ -10,10 +13,8 @@ import Videos from 'components/Videos/Videos';
 import Contact from 'components/Contact/Contact';
 import Recipes from 'components/Recipes/Recipes';
 import Posts from 'components/Posts/Posts';
-import { useEffect } from 'react';
-import { fetchAllYoutubeVideos } from 'actions/apiData';
-import { useDispatch } from 'react-redux';
 import Post from 'components/Post/Post';
+import Recipe from 'components/Recipe/Recipe';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -51,6 +52,7 @@ function App() {
           <Route path="/posts" element={<Posts />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="/recipe/:id" element={<Recipe />} />
         </Routes>
       </main>
 
