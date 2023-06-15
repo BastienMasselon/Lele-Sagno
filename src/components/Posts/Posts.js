@@ -9,7 +9,7 @@ function Posts() {
 
   return (
     <div className="flex flex-col px-4">
-        <h1 className='font-brandon-fat uppercase tracking-wider text-lele-blue text-center text-xl mt-8'>Société, bien-être, expériences... Je te partage mes pensées sur des sujets variés 😄</h1>
+        <h1 className='font-brandon-fat uppercase tracking-wider text-lele-blue text-center text-xl mt-8'>Société, bien-être, expériences... Je te partage mes pensées et mes folles aventures 😄</h1>
       {
         arrayForLoop.map( (value) => 
             <PostCard

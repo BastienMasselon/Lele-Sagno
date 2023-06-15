@@ -1,11 +1,12 @@
 // == Import
 
 import { submitContactForm, changeFieldValue } from "actions/user";
+import FormModal from "components/FormModal/FormModal";
 import { useDispatch, useSelector } from "react-redux";
 
 // == Composant
 function Contact() {
-    const { contactEmail, contactName, contactContent } = useSelector( (state) => state.app)
+    const { contactEmail, contactName, contactContent, contactSubmitMessage } = useSelector( (state) => state.app)
     const dispatch = useDispatch();
     const handleChange = (evt) => {
         dispatch(changeFieldValue(evt.target.name, evt.target.value));
@@ -73,7 +74,7 @@ function Contact() {
                 <input
                     type="submit"
                     value="Envoyer"
-                    className="font-bold uppercase tracking-wider"  
+                    className="font-brandon-med uppercase tracking-wider"  
                 />
                 <svg 
                     className="h-6 fill-current pl-3"
@@ -86,6 +87,8 @@ function Contact() {
 
 
         </form>
+
+        {(contactSubmitMessage.text !== '') && <FormModal success={contactSubmitMessage.success} message={contactSubmitMessage.text} />}
     </div>
   );
 }

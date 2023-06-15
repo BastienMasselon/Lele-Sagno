@@ -11,7 +11,7 @@ function Recipe() {
                 className='object-cover h-64 w-full rounded-lg'
                 src='https://image.over-blog.com/Wixf7SBJeEE3O1TrCC40HIQaGCk=/filters:no_upscale()/image%2F0651923%2F20190201%2Fob_45741b_wok-legumes-croquants-nouilles-poul.jpg'
             />
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 italic text-center text-white [text-shadow:_0_1px_5px_rgb(0_0_0_/_100%)] bg-black/30 w-full py-1 px-2 text-2xl'>
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 italic text-center text-white [text-shadow:_0_1px_5px_rgb(0_0_0_/_100%)] bg-black/40 w-full py-1 px-2 text-2xl'>
                 <h1>Nouilles sautées au poulet et aux légumes</h1>
                 <div className="flex items-center justify-center mt-2">
                     <svg 

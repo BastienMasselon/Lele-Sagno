@@ -1,4 +1,4 @@
-import {CLOSE_BURGER, TOGGLE_BURGER} from 'actions/app';
+import {CLOSE_BURGER, CHANGE_CONTACT_SUBMIT_MESSAGE, TOGGLE_BURGER} from 'actions/app';
 import { CHANGE_FIELD_VALUE } from 'actions/user';
 
 const initialState = {
@@ -7,6 +7,10 @@ const initialState = {
   contactEmail: '',
   contactName: '',
   contactContent: '',
+  contactSubmitMessage: {
+    success: false,
+    text: '',
+  },
 };
 
 function reducer(state = initialState, action = {}) {
@@ -23,6 +27,15 @@ function reducer(state = initialState, action = {}) {
           ...state,
           isBurgerOpen: false,
         };
+
+    case CHANGE_CONTACT_SUBMIT_MESSAGE: 
+      return {
+        ...state,
+        contactSubmitMessage: {
+          success: action.success,
+          text: action.message,
+        }
+      }
 
     // updating any form field value
     case CHANGE_FIELD_VALUE:

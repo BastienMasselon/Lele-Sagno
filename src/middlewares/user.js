@@ -1,6 +1,7 @@
 import { SUBMIT_CONTACT_FORM, changeFieldValue } from "actions/user";
 import emailjs from '@emailjs/browser';
 import DOMPurify, { sanitize } from "dompurify";
+import { changeContactSubmitMessage} from "actions/app";
 
 const user = (store) => (next) => (action) => {
   switch (action.type) {
@@ -34,12 +35,12 @@ const user = (store) => (next) => (action) => {
                     store.dispatch(changeFieldValue('contactEmail', ''));
                     store.dispatch(changeFieldValue('contactName', ''));
                     store.dispatch(changeFieldValue('contactContent', ''));
-                    // notifying user that the message has been successfully sent
-                    alert('Votre message a bien été envoyé à Lele Sagno');
+                    // Opening modal to notify user the message has been successfully sent
+                    store.dispatch(changeContactSubmitMessage(true, 'Votre message a bien été envoyé à Lele Sagno'));
                 }
             }, (error) => {
                 // Notifying the user that the message couldn't be sent.
-                alert("Désolé, votre message n'a pas pu être envoyé. Veuillez essayer à nouveau.");
+                store.dispatch(changeContactSubmitMessage(false, "Votre message n'a pas pu être envoyé. Veuillez ré-essayer."));
             });
     }
 
