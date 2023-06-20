@@ -3,6 +3,7 @@ import verseBackground from 'assets/img/porto.JPG';
 import arrowBlack from 'assets/img/arrow-down.svg';
 import arrowWhite from 'assets/img/arrow-down-white.svg';
 import SlideNav from 'components/SlideNav';
+import leleHomePicture from 'assets/img/lele-home.jpg';
 import YoutubeEmbed from 'components/YoutubeEmbed/YoutubeEmbed';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ function Home() {
         <div>
           <img
             className="object-cover h-96 w-full"
-            src="https://scontent-mrs2-1.xx.fbcdn.net/v/t1.6435-9/180606580_302381094791207_3444169882855242130_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9267fe&_nc_ohc=RZk1G_g46AwAX9i72Wf&_nc_ht=scontent-mrs2-1.xx&oh=00_AfAlTr7bxR__Re7KCa5M9bxXDJ1_nca_ry1gmZqnLGWxqg&oe=6485EFB8"
+            src={leleHomePicture}
             alt="Lele Sagno smiling"
           >
           </img>

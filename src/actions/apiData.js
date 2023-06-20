@@ -10,3 +10,16 @@ export const saveAllYoutubeVideos = (allYoutubeVideos) => ({
   type: SAVE_ALL_YOUTUBE_VIDEOS,
   allYoutubeVideos,
 });
+
+// Fetch data of all posts from the wordpress API
+export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
+export const fetchAllPosts = () => ({
+  type: FETCH_ALL_POSTS,
+});
+
+// Save posts in the state
+export const SAVE_POSTS = 'SAVE_POSTS';
+export const savePosts = (postList) => ({
+  type: SAVE_POSTS,
+  postList,
+});

@@ -1,7 +1,8 @@
-import { SAVE_ALL_YOUTUBE_VIDEOS } from "actions/apiData";
+import { SAVE_ALL_YOUTUBE_VIDEOS, SAVE_POSTS } from "actions/apiData";
 
 const initialState = {
   allYoutubeVideos: [],
+  postList: [],
 };
 
 function reducer(state = initialState, action = {}) {
@@ -12,6 +13,13 @@ function reducer(state = initialState, action = {}) {
             ...state,
             allYoutubeVideos: action.allYoutubeVideos,
         }
+    }
+
+    case SAVE_POSTS: {
+      return {
+        ...state,
+        postList: action.postList,
+      }
     }
     default:
       return state;

@@ -1,4 +1,4 @@
-import { FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts } from "actions/apiData";
 import axios from "axios";
 
 const apiData = (store) => (next) => (action) => {
@@ -30,6 +30,21 @@ const apiData = (store) => (next) => (action) => {
 
         next(action);
         break;  
+    }
+
+    case FETCH_ALL_POSTS: {
+        const requestUrl = `http://lelesagno-apibo/wordpress/wp-json/wp/v2/posts`
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(savePosts(response.data))
+                }
+            }) 
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     default:

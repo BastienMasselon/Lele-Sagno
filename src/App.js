@@ -4,7 +4,7 @@ import './App.css';
 
 // Components
 import { useEffect } from 'react';
-import { fetchAllYoutubeVideos } from 'actions/apiData';
+import { fetchAllPosts, fetchAllYoutubeVideos } from 'actions/apiData';
 import { useDispatch } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -35,6 +35,7 @@ function App() {
   
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
+    dispatch(fetchAllPosts());
   }, []);
 
 
