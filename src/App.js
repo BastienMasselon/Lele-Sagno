@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
+import './styles/wordpress/style.min.css';
 
 // Components
 import { useEffect } from 'react';
