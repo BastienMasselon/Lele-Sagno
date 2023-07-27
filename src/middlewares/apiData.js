@@ -33,7 +33,8 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_ALL_POSTS: {
-        const requestUrl = `http://lelesagno-apibo/wordpress/wp-json/wp/v2/posts`
+        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+        const requestUrl = `${wordpressDomain}/posts`
 
         // requesting posts to the wordpress API
         axios.get(requestUrl)
