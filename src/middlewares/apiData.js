@@ -34,7 +34,7 @@ const apiData = (store) => (next) => (action) => {
 
     case FETCH_ALL_POSTS: {
         const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
-        const requestUrl = `${wordpressDomain}/posts`
+        const requestUrl = `${wordpressDomain}/posts?_embed`
 
         // requesting posts to the wordpress API
         axios.get(requestUrl)
