@@ -2,13 +2,24 @@
 import './post.css';
 import arrow from 'assets/img/arrow-down-white.svg';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { findPost } from 'utils/selectors';
+import { makeDatePrettier } from 'utils/utils';
 
 // == Composant
 function Post() {
   const { postList } = useSelector((state) => state.data);
-  const post = postList[0];
-  console.log(post);
+  // getting the post slug from url
+  const { slug } = useParams();
+  // find the post matching the slug
+  const post = findPost(postList, slug);
+  const formatedDate = makeDatePrettier(post.date);
+
+  // TODO send user to error page if article does not exist
+  // if (!post) {
+  //   return <Navigate to="/" replace />;
+  // }
+
   return (
     <div className="post_container flex flex-col text-lg p-4">
       {/* <h1 className="font-brandon-fat uppercase text-xl text-lele-blue mt-4">Non, partir en France ne va pas transformer ta vie en vie de rêve</h1>
@@ -18,6 +29,7 @@ function Post() {
         className="font-brandon-fat uppercase text-2xl text-lele-blue mt-2 self-center"
         dangerouslySetInnerHTML={{__html: post.title.rendered}}
       ></h1>
+      <p className='italic text-slate-400 self-center mt-1'><time dateTime={post.date}>{formatedDate}</time></p>
       <div 
         dangerouslySetInnerHTML={{__html: post.content.rendered}}
         className='flex flex-col'
