@@ -2,14 +2,16 @@
 import verseBackground from 'assets/img/porto.JPG';
 import arrowBlack from 'assets/img/arrow-down.svg';
 import arrowWhite from 'assets/img/arrow-down-white.svg';
-import SlideNav from 'components/SlideNav';
+import SlideNav from 'components/SlideNav/SlideNav';
 import leleHomePicture from 'assets/img/lele-home.jpg';
 import YoutubeEmbed from 'components/YoutubeEmbed/YoutubeEmbed';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // == Composant
 function Home() {
+  const { postList } = useSelector((state) => state.data);
   const i = [1, 2, 3, 4, 5]
   return (
     <div>
@@ -47,7 +49,7 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={i}
+            data={postList}
             bgColor={'lele-blue'}
             buttonsColor={'lele-orange'}  
           />

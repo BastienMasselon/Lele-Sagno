@@ -6,7 +6,7 @@ import './styles/wordpress/style.min.css';
 // Components
 import { useEffect } from 'react';
 import { fetchAllPosts, fetchAllYoutubeVideos } from 'actions/apiData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Home from 'components/Home/Home';
@@ -16,6 +16,7 @@ import Recipes from 'components/Recipes/Recipes';
 import Posts from 'components/Posts/Posts';
 import Post from 'components/Post/Post';
 import Recipe from 'components/Recipe/Recipe';
+import Loading from 'components/Loading';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -23,6 +24,8 @@ function App() {
 
   // getting location 
   const location = useLocation();
+
+  const { loadingPosts } = useSelector((state) => state.data);
 
   // using location in effect hook to scroll back to the top of the page every time the user switch pages
   useEffect(
@@ -37,28 +40,34 @@ function App() {
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
     dispatch(fetchAllPosts());
+    // dispatch(fetchAllRecipes());
   }, []);
 
 
 
   return (
     <div className="App font-brandon flex flex-col min-h-screen justify-between">
+      {loadingPosts && <Loading />}
 
-      <Header />
-
-      <main className="mt-16">
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/videos" element={<Videos />} />
-          <Route path="/recipes" element={<Recipes />} />
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/post/:slug" element={<Post />} />
-          <Route path="/recipe/:id" element={<Recipe />} />
-        </Routes>
-      </main>
-
-      <Footer />
+      {!loadingPosts && (
+        <>
+          <Header />
+    
+          <main className="mt-16">
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/videos" element={<Videos />} />
+              <Route path="/recipes" element={<Recipes />} />
+              <Route path="/posts" element={<Posts />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/post/:slug" element={<Post />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
+            </Routes>
+          </main>
+    
+          <Footer />
+        </>
+      )}
     </div>
   );
 }
