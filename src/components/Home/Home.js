@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 // == Composant
 function Home() {
-  const { postList } = useSelector((state) => state.data);
+  const { postList, recipeList } = useSelector((state) => state.data);
   const i = [1, 2, 3, 4, 5]
   return (
     <div>
@@ -76,7 +76,7 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={i}
+            data={recipeList}
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
           />

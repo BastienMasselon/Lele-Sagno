@@ -1,4 +1,4 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts, saveRecipes } from "actions/apiData";
 import axios from "axios";
 
 const apiData = (store) => (next) => (action) => {
@@ -41,6 +41,23 @@ const apiData = (store) => (next) => (action) => {
             .then((response) => {
                 if (response.status === 200) {
                     store.dispatch(savePosts(response.data))
+                }
+            }) 
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    case FETCH_ALL_RECIPES: {
+        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+        const requestUrl = `${wordpressDomain}/recipes?_embed`
+
+        // requesting recipes to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    store.dispatch(saveRecipes(response.data))
                 }
             }) 
             .catch((error) => {

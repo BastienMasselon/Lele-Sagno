@@ -16,7 +16,7 @@ function Posts() {
             <PostCard
                 // should use recipe's id as key
                 key={post.id}
-                thumbnail={post._embedded["wp:featuredmedia"] ? post._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
+                thumbnail={post._embedded && post._embedded["wp:featuredmedia"] ? post._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
                 title={post.title.rendered}
                 publishedDate={post.date}
                 postId={post.id}

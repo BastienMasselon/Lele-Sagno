@@ -5,7 +5,7 @@ import './styles/wordpress/style.min.css';
 
 // Components
 import { useEffect } from 'react';
-import { fetchAllPosts, fetchAllYoutubeVideos } from 'actions/apiData';
+import { fetchAllPosts, fetchAllRecipes, fetchAllYoutubeVideos } from 'actions/apiData';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -16,7 +16,7 @@ import Recipes from 'components/Recipes/Recipes';
 import Posts from 'components/Posts/Posts';
 import Post from 'components/Post/Post';
 import Recipe from 'components/Recipe/Recipe';
-import Loading from 'components/Loading';
+import Loading from 'components/Loading/Loading';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
     dispatch(fetchAllPosts());
-    // dispatch(fetchAllRecipes());
+    dispatch(fetchAllRecipes());
   }, []);
 
 
