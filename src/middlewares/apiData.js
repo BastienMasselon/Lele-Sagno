@@ -56,7 +56,6 @@ const apiData = (store) => (next) => (action) => {
         axios.get(requestUrl)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     store.dispatch(saveRecipes(response.data))
                 }
             }) 

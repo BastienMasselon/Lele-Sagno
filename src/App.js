@@ -17,6 +17,7 @@ import Posts from 'components/Posts/Posts';
 import Post from 'components/Post/Post';
 import Recipe from 'components/Recipe/Recipe';
 import Loading from 'components/Loading/Loading';
+import Error from 'components/Error/Error';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -62,6 +63,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/post/:slug" element={<Post />} />
               <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </main>
     
