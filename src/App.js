@@ -62,7 +62,7 @@ function App() {
               <Route path="/posts" element={<Posts />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/post/:slug" element={<Post />} />
-              <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="/recipe/:slug" element={<Recipe />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </main>

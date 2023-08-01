@@ -37,7 +37,7 @@ function Home() {
 
       <section className="relative text-xl mt-4">
         <img src={verseBackground} alt="inspirational landscape" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-slate-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">
           <p className="italic mb-4">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
           <p className="text-lg">Jérémie 29 : 11</p>
         </div>

@@ -30,7 +30,7 @@ function Header() {
   const { isBurgerOpen } = useSelector((state) => state.app);
 
   return (
-    <header className="fixed w-full top-0 z-50 shadow-[0_1px_3px_1px_rgba(0,0,0,0.2)]">
+    <header className="fixed w-full top-0 z-50 ">
         <div className="bg-lele-orange h-16 flex justify-between items-center">
           <Link to="/"><img src={logoLele} alt="logo de Lele Sagno" className="w-10 ml-3" /></Link>
           <img src={isBurgerOpen ? closeBurgerIcon : burgerIcon} alt="palmier" onClick={handleClickBurger} className="stroke-white w-14 mr-3" />
