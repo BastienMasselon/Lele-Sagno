@@ -6,11 +6,11 @@ import colorVariants from "data/colorVariants";
 
 
 // == Composant
-function HomeCard({thumbnail, title, buttonColor, slug}) {
+function HomeCard({thumbnail, title, buttonColor, slug, postType}) {
   return (
     <Link 
         className='flex flex-col items-center'
-        to={`/post/${slug}`}
+        to={`/${postType}/${slug}`}
     >
         <div className='w-full'>
             <img 
@@ -33,6 +33,7 @@ HomeCard.propTypes = {
     title: PropTypesLib.string.isRequired,
     buttonColor: PropTypesLib.string,
     slug: PropTypesLib.string.isRequired,
+    postType: PropTypesLib.string.isRequired,
 };
 
 // == Export

@@ -51,7 +51,8 @@ function Home() {
           <SlideNav 
             data={postList}
             bgColor={'lele-blue'}
-            buttonsColor={'lele-orange'}  
+            buttonsColor={'lele-orange'} 
+            postType='post'
           />
       </section>
 
@@ -79,6 +80,7 @@ function Home() {
             data={recipeList}
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
+            postType='recipe'
           />
       </section>
 

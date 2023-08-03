@@ -6,7 +6,7 @@ import colorVariants from "data/colorVariants";
 import noImage from "assets/img/empty-image.png";
 
 // == Composant
-function SlideNav({data, bgColor, buttonsColor}) {
+function SlideNav({data, bgColor, buttonsColor, postType}) {
     const nbLatestPosts = data.length;
     // saving the 5 latest posts in an array. If there are less than 5 posts, saving the total amount of posts
     const latestPosts = data.slice(0, nbLatestPosts < 4 ? nbLatestPosts : 4);
@@ -23,6 +23,7 @@ function SlideNav({data, bgColor, buttonsColor}) {
                         title={post.title.rendered}
                         buttonColor={buttonsColor}
                         slug={post.slug}
+                        postType={postType}
                     />
                     <p
                         className={`${colorVariants[buttonsColor]} uppercase text-center font-brandon-med text-lg text-white self-center absolute bottom-4 rounded-full p-1 mt-3 w-24`}
@@ -40,6 +41,7 @@ SlideNav.propTypes = {
     data: PropTypesLib.array.isRequired,
     bgColor: PropTypesLib.string,
     buttonsColor: PropTypesLib.string,
+    postType: PropTypesLib.string.isRequired,
 }
 
 // == Export
