@@ -50,8 +50,6 @@ function Home() {
       <section className='mt-4'>
           <SlideNav 
             data={postList}
-            bgColor={'lele-blue'}
-            buttonsColor={'lele-orange'}  
           />
       </section>
 
@@ -79,6 +77,7 @@ function Home() {
             data={recipeList}
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
+            postType='recipe'
           />
       </section>
 
