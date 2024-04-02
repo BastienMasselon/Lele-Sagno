@@ -28,7 +28,6 @@ const user = (store) => (next) => (action) => {
         // https://dashboard.emailjs.com/admin
         emailjs.send('contact_service', 'contact_form', templateParams, EmailJSApiKey)
             .then((response) => {
-                console.log(response);
                 // if request is successfull
                 if (response.status === 200) {
                     // emptying form fields
