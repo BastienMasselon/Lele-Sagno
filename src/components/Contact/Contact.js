@@ -1,24 +1,57 @@
 // == Import
 
+import { changeFormFieldErrorMessage } from "actions/app";
 import { submitContactForm, changeFieldValue } from "actions/user";
+import FieldError from "components/Error/FieldError";
 import FormModal from "components/FormModal/FormModal";
 import { useDispatch, useSelector } from "react-redux";
+import { isFieldEmpty, isStringLongerThan, validateEmail } from "utils/validators";
 
 // == Composant
 function Contact() {
-    const { contactEmail, contactName, contactContent, contactSubmitMessage } = useSelector( (state) => state.app)
+    const { contactEmail, contactName, contactContent, contactSubmitMessage, formFieldErrors } = useSelector( (state) => state.app)
     const dispatch = useDispatch();
     const handleChange = (evt) => {
         dispatch(changeFieldValue(evt.target.name, evt.target.value));
+        // validating user's input
+        switch (evt.target.name) {
+            case 'contactEmail' :
+                if (!validateEmail(evt.target.value)) {
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+                    break;
+                } 
+                else {
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
+                }
+                break;
+            case 'contactName' :
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, isFieldEmpty(evt.target.value) ? 'Ce champ est requis' : ''));
+                    break;
+            case 'contactContent' :
+                if (isFieldEmpty(evt.target.value)) {
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Ce champ est requis'));
+                    console.log(formFieldErrors)
+                    break;
+                }
+                else if (!isStringLongerThan(evt.target.value, 10)) {
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez écrire un message d\'au moins 10 caractères'));
+                    break;
+                }
+                else {
+                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
+                }
+        }
     }
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        dispatch(submitContactForm());
+        // Validating the form before sending it
+        const isValid = Object.values(formFieldErrors).every((error) => error === '');
+        if (isValid || contactEmail !== '') dispatch(submitContactForm());
     }
     
 
   return (
-    <div className="">
+      <div className="">
       <p className="text-center px-4 pt-4 text-xl">Une demande, une info, un message ? N'hésite pas à me contacter ! :)</p>
 
         <form 
@@ -38,7 +71,9 @@ function Contact() {
                     placeholder='Votre adresse mail'
                     required
                 />
+                {formFieldErrors.contactEmail !== '' ? <FieldError message={formFieldErrors.contactEmail}/> : '' }
             </label>
+                
             <label
                 className="flex flex-col text-lg mt-8"
             >
@@ -52,6 +87,7 @@ function Contact() {
                     placeholder='Votre nom/pseudonyme'
                     required
                 />
+                {formFieldErrors.contactName !== '' ? <FieldError message={formFieldErrors.contactName}/> : '' }
             </label>
             <label
                 className="flex flex-col text-lg mt-8"
@@ -66,6 +102,7 @@ function Contact() {
                     placeholder="Ecrivez votre message ici"
                     required
                 />
+                {formFieldErrors.contactContent !== '' ? <FieldError message={formFieldErrors.contactContent}/> : '' }
             </label>
 
             <p className="mt-6">* : champs obligatoires</p>
