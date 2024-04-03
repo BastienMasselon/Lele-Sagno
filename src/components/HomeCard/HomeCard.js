@@ -3,14 +3,14 @@
 import { Link } from "react-router-dom";
 import PropTypesLib from 'prop-types';
 import colorVariants from "data/colorVariants";
-
+import { makeExcerpt } from "utils/utils";
 
 // == Composant
-function HomeCard({thumbnail, title, buttonColor}) {
+function HomeCard({thumbnail, title, buttonColor, slug, postType}) {
   return (
     <Link 
         className='flex flex-col items-center'
-        to=""
+        to={`/${postType}/${slug}`}
     >
         <div className='w-full'>
             <img 
@@ -18,9 +18,9 @@ function HomeCard({thumbnail, title, buttonColor}) {
                 className='object-cover h-32 w-full'
             />
         </div>
-        <p className='text-xl font-semibold text-gray-600 leading-6 p-3'>{title}</p>
+        <p className='text-xl font-semibold text-gray-600 leading-6 p-3' dangerouslySetInnerHTML={{__html: makeExcerpt(title, 100)}}></p>
         <p
-            className={`${colorVariants[buttonColor]} uppercase text-center font-brandon-med  text-lg text-white rounded-full p-1 mt-3 w-24`}
+            className={`${colorVariants[buttonColor]} uppercase text-center font-brandon-med text-lg text-white rounded-full absolute bottom-4 p-1 mt-3 w-24`}
         >
             lire
         </p>
@@ -28,10 +28,16 @@ function HomeCard({thumbnail, title, buttonColor}) {
   );
 }
 
+HomeCard.defaultProps = {
+    postType: 'post'
+}
+
 HomeCard.propTypes = {
     thumbnail: PropTypesLib.string,
     title: PropTypesLib.string.isRequired,
     buttonColor: PropTypesLib.string,
+    slug: PropTypesLib.string.isRequired,
+    postType: PropTypesLib.string.isRequired
 };
 
 // == Export

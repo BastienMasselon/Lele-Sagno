@@ -1,4 +1,4 @@
-import { FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts, saveRecipes } from "actions/apiData";
 import axios from "axios";
 
 const apiData = (store) => (next) => (action) => {
@@ -30,6 +30,38 @@ const apiData = (store) => (next) => (action) => {
 
         next(action);
         break;  
+    }
+
+    case FETCH_ALL_POSTS: {
+        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+        const requestUrl = `${wordpressDomain}/posts?_embed`
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(savePosts(response.data))
+                }
+            }) 
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    case FETCH_ALL_RECIPES: {
+        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+        const requestUrl = `${wordpressDomain}/recipes?_embed`
+
+        // requesting recipes to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(saveRecipes(response.data))
+                }
+            }) 
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     default:

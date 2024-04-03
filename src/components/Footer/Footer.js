@@ -20,7 +20,7 @@ function Footer() {
   }
 
   return (
-    <div className="mt-12 p-4 bg-lele-blue text-slate-200">
+    <div className="mt-10 p-4 bg-lele-blue text-slate-200">
       <div className='flex flex-col items-center'>
         <form 
           className='flex flex-col justify-center text-black w-11/12'

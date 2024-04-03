@@ -10,7 +10,7 @@ function Videos() {
   const { allYoutubeVideos } = useSelector((state) => state.data);
   return (
     <div className="pt-6 px-2">
-      <p className="text-xl text-center">Ici, tu trouveras mes dernières vidéos. Tu peux également les voir directement sur <span className="text-lele-blue font-brandon-med underline">
+      <p className="text-xl text-center">Ici, tu trouveras mes dernières vidéos. Tu peux voir plus de vidéos sur <span className="text-lele-blue font-brandon-med underline">
             <Link 
                 to="https://www.youtube.com/@lelesagno1187" 
                 target='_blank'
@@ -18,7 +18,7 @@ function Videos() {
             >
                 ma chaîne Youtube
             </Link>
-        </span>.
+        </span>!
       </p>
 
       { 

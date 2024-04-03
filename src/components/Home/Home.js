@@ -2,13 +2,16 @@
 import verseBackground from 'assets/img/porto.JPG';
 import arrowBlack from 'assets/img/arrow-down.svg';
 import arrowWhite from 'assets/img/arrow-down-white.svg';
-import SlideNav from 'components/SlideNav';
+import SlideNav from 'components/SlideNav/SlideNav';
+import leleHomePicture from 'assets/img/lele-home.jpg';
 import YoutubeEmbed from 'components/YoutubeEmbed/YoutubeEmbed';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // == Composant
 function Home() {
+  const { postList, recipeList } = useSelector((state) => state.data);
   const i = [1, 2, 3, 4, 5]
   return (
     <div>
@@ -18,7 +21,7 @@ function Home() {
         <div>
           <img
             className="object-cover h-96 w-full"
-            src="https://scontent-mrs2-1.xx.fbcdn.net/v/t1.6435-9/180606580_302381094791207_3444169882855242130_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9267fe&_nc_ohc=RZk1G_g46AwAX9i72Wf&_nc_ht=scontent-mrs2-1.xx&oh=00_AfAlTr7bxR__Re7KCa5M9bxXDJ1_nca_ry1gmZqnLGWxqg&oe=6485EFB8"
+            src={leleHomePicture}
             alt="Lele Sagno smiling"
           >
           </img>
@@ -34,7 +37,7 @@ function Home() {
 
       <section className="relative text-xl mt-4">
         <img src={verseBackground} alt="inspirational landscape" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-slate-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">
           <p className="italic mb-4">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
           <p className="text-lg">Jérémie 29 : 11</p>
         </div>
@@ -46,9 +49,7 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={i}
-            bgColor={'lele-blue'}
-            buttonsColor={'lele-orange'}  
+            data={postList}
           />
       </section>
 
@@ -73,9 +74,10 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={i}
+            data={recipeList}
             bgColor={'lele-orange'}
-            buttonsColor={'lele-blue'}  
+            buttonsColor={'lele-blue'}
+            postType='recipe'
           />
       </section>
 
