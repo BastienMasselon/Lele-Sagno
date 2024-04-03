@@ -44,9 +44,9 @@ function Contact() {
     }
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        // Validating the form before sending it
+        // Checking for form errors before trying to send it
         const isValid = Object.values(formFieldErrors).every((error) => error === '');
-        if (isValid || contactEmail !== '') dispatch(submitContactForm());
+        if (isValid && contactEmail !== '') dispatch(submitContactForm());
     }
     
 
@@ -107,11 +107,11 @@ function Contact() {
 
             <p className="mt-6">* : champs obligatoires</p>
 
-            <div className='flex justify-center items-center text-xl bg-lele-blue rounded-md px-4 mt-2 h-11 w-fit text-slate-100 self-center shadow-md'>
+            <div className='flex justify-center items-center text-xl bg-lele-blue rounded-md px-4 mt-2 h-11 w-fit text-slate-100 self-center shadow-md hover:cursor-pointer hover:bg-lele-orange hover:text-black active:bg-lele-blue'>
                 <input
                     type="submit"
                     value="Envoyer"
-                    className="font-brandon-med uppercase tracking-wider"  
+                    className="font-brandon-med uppercase tracking-wider hover:cursor-pointer"  
                 />
                 <svg 
                     className="h-6 fill-current pl-3"
