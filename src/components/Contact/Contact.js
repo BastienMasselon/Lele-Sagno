@@ -17,35 +17,34 @@ function Contact() {
         switch (evt.target.name) {
             case 'contactEmail' :
                 if (!validateEmail(evt.target.value)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
                     break;
                 } 
                 else {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, ''));
                 }
                 break;
             case 'contactName' :
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, isFieldEmpty(evt.target.value) ? 'Ce champ est requis' : ''));
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, isFieldEmpty(evt.target.value) ? 'Ce champ est requis' : ''));
                     break;
             case 'contactContent' :
                 if (isFieldEmpty(evt.target.value)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Ce champ est requis'));
-                    console.log(formFieldErrors)
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Ce champ est requis'));
                     break;
                 }
                 else if (!isStringLongerThan(evt.target.value, 10)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez écrire un message d\'au moins 10 caractères'));
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Veuillez écrire un message d\'au moins 10 caractères'));
                     break;
                 }
                 else {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
+                    dispatch(changeFormFieldErrorMessage('contact', evt.target.name, ''));
                 }
         }
     }
     const handleSubmit = (evt) => {
         evt.preventDefault();
         // Checking for form errors before trying to send it
-        const isValid = Object.values(formFieldErrors).every((error) => error === '');
+        const isValid = Object.values(formFieldErrors.contact).every((error) => error === '');
         if (isValid && contactEmail !== '') dispatch(submitContactForm());
     }
     
@@ -71,7 +70,7 @@ function Contact() {
                     placeholder='Votre adresse mail'
                     required
                 />
-                {formFieldErrors.contactEmail !== '' ? <FieldError message={formFieldErrors.contactEmail}/> : '' }
+                {formFieldErrors.contact.contactEmail !== '' ? <FieldError message={formFieldErrors.contact.contactEmail}/> : '' }
             </label>
                 
             <label
@@ -87,7 +86,7 @@ function Contact() {
                     placeholder='Votre nom/pseudonyme'
                     required
                 />
-                {formFieldErrors.contactName !== '' ? <FieldError message={formFieldErrors.contactName}/> : '' }
+                {formFieldErrors.contact.contactName !== '' ? <FieldError message={formFieldErrors.contact.contactName}/> : '' }
             </label>
             <label
                 className="flex flex-col text-lg mt-8"
@@ -102,7 +101,7 @@ function Contact() {
                     placeholder="Ecrivez votre message ici"
                     required
                 />
-                {formFieldErrors.contactContent !== '' ? <FieldError message={formFieldErrors.contactContent}/> : '' }
+                {formFieldErrors.contact.contactContent !== '' ? <FieldError message={formFieldErrors.contact.contactContent}/> : '' }
             </label>
 
             <p className="mt-6">* : champs obligatoires</p>

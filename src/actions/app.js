@@ -18,8 +18,9 @@ export const changeContactSubmitMessage = (success, message) => ({
 
 // Changing the error message of a specific field
 export const CHANGE_FORM_FIELD_ERROR_MESSAGE = 'CHANGE_FORM_FIELD_ERROR_VALUE';
-export const changeFormFieldErrorMessage = (field, message) => ({
+export const changeFormFieldErrorMessage = (formName, field, message) => ({
   type: CHANGE_FORM_FIELD_ERROR_MESSAGE,
+  formName,
   field,
   message,
 });

@@ -12,11 +12,15 @@ const initialState = {
     text: '',
   },
   formFieldErrors: {
-    newsletterEmail: '',
-    contactEmail: '',
-    contactName: '',
-    contactContent: '',
-  }
+    contact: {
+      contactEmail: '',
+      contactName: '',
+      contactContent: '',
+    },
+    newsletter: {
+      newsletterEmail: '',
+    }
+  },
 };
 
 function reducer(state = initialState, action = {}) {
@@ -55,7 +59,11 @@ function reducer(state = initialState, action = {}) {
         ...state,
         formFieldErrors: {
           ...state.formFieldErrors,
-          [action.field] : action.message,
+          // [action.field] : action.message,
+          [action.formName] : {
+            ...state.formFieldErrors[action.formName],
+            [action.field]: action.message,
+          }
         }
       };
         

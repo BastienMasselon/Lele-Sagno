@@ -5,7 +5,7 @@ import PropTypesLib from "prop-types";
 function FieldError({message}) {
   return (
     <>
-        <p className="text-base text-red-600">
+        <p className="text-base text-red-500">
           {message}
         </p>
     </>

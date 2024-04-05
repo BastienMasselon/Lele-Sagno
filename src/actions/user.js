@@ -11,3 +11,9 @@ export const SUBMIT_CONTACT_FORM = 'SUBMIT_CONTACT_FORM';
 export const submitContactForm = () => ({
   type: SUBMIT_CONTACT_FORM,
 });
+
+// Adding user's input on newsletter form to subscribers list in database
+export const SUBMIT_NEWSLETTER_FORM = 'SUBMIT_NEWSLETTER_FORM';
+export const submitNewsletterForm = () => ({
+  type: SUBMIT_NEWSLETTER_FORM,
+});

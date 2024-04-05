@@ -1,22 +1,33 @@
 // == Import
-import { changeFieldValue } from 'actions/user';
+import { changeFormFieldErrorMessage } from 'actions/app';
+import { changeFieldValue, submitNewsletterForm } from 'actions/user';
 import fbLogo from 'assets/img/social media/icons8-facebook.svg';
 import instaLogo from 'assets/img/social media/icons8-instagram.svg';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
+import FieldError from 'components/Error/FieldError';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { validateEmail } from 'utils/validators';
 
 // == Composant
 function Footer() {
 
   const dispatch = useDispatch();
-  const { newsletterEmail } = useSelector((state) => state.app);
+  const { newsletterEmail, formFieldErrors } = useSelector((state) => state.app);
   const handleChange = (evt) => {
     dispatch(changeFieldValue(evt.target.name, evt.target.value));
+    if (!validateEmail(evt.target.value)) {
+      dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+    } 
+    else {
+      dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, ''));
+    }
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // TODO
+    const isValid = Object.values(formFieldErrors).every((error) => error === '');
+        if (isValid && contactEmail !== '') dispatch(submitContactForm());
+    dispatch(submitNewsletterForm());
   }
 
   return (
@@ -39,6 +50,7 @@ function Footer() {
             onChange={handleChange}
             className='rounded-md h-8 mt-2 p-1'
           />
+          {formFieldErrors.newsletter.newsletterEmail !== '' ? <FieldError message={formFieldErrors.newsletter.newsletterEmail}/> : '' }
           <input 
             type="submit" 
             value="S'inscrire"

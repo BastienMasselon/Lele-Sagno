@@ -1,7 +1,8 @@
-import { SUBMIT_CONTACT_FORM, changeFieldValue } from "actions/user";
+import { SUBMIT_CONTACT_FORM, SUBMIT_NEWSLETTER_FORM, changeFieldValue } from "actions/user";
 import emailjs from '@emailjs/browser';
 import DOMPurify, { sanitize } from "dompurify";
 import { changeContactSubmitMessage} from "actions/app";
+import axios from "axios";
 
 const user = (store) => (next) => (action) => {
   switch (action.type) {
@@ -41,6 +42,30 @@ const user = (store) => (next) => (action) => {
                 // Notifying the user that the message couldn't be sent.
                 store.dispatch(changeContactSubmitMessage(false, "Votre message n'a pas pu être envoyé. Veuillez ré-essayer."));
             });
+    }
+
+    case SUBMIT_NEWSLETTER_FORM : {
+        const requestUrl = process.env.REACT_APP_WP_NEWSLETTER_API_DOMAIN + 'subscribers';
+        console.log(requestUrl);
+        const auth = {
+            username: process.env.REACT_APP_WP_NEWSLETTER_CLIENT_KEY,
+            password: process.env.REACT_APP_WP_NEWSLETTER_CLIENT_SECRET,
+        }
+        const data = {
+            email: "user3@example.com",
+            status: "confirmed",
+        }
+        
+        // 201 : successfully created
+        // 400 : email address already exists
+        // 401 : authentication is missing or invalid
+        axios.post(requestUrl, data, { auth: auth })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     default:
