@@ -9,7 +9,7 @@ import { isFieldEmpty, isStringLongerThan, validateEmail } from "utils/validator
 
 // == Composant
 function Contact() {
-    const { contactEmail, contactName, contactContent, contactSubmitMessage, formFieldErrors } = useSelector( (state) => state.app)
+    const { contactEmail, contactName, contactContent, formSubmitMessage, formFieldErrors } = useSelector( (state) => state.app)
     const dispatch = useDispatch();
     const handleChange = (evt) => {
         dispatch(changeFieldValue(evt.target.name, evt.target.value));
@@ -124,7 +124,7 @@ function Contact() {
 
         </form>
 
-        {(contactSubmitMessage.text !== '') && <FormModal success={contactSubmitMessage.success} message={contactSubmitMessage.text} />}
+        {/* {(formSubmitMessage.text !== '') && <FormModal success={formSubmitMessage.success} message={formSubmitMessage.text} />} */}
     </div>
   );
 }

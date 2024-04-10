@@ -1,4 +1,4 @@
-import {CLOSE_BURGER, CHANGE_CONTACT_SUBMIT_MESSAGE, TOGGLE_BURGER, CHANGE_FORM_FIELD_ERROR_MESSAGE} from 'actions/app';
+import {CLOSE_BURGER, CHANGE_FORM_SUBMIT_MESSAGE, TOGGLE_BURGER, CHANGE_FORM_FIELD_ERROR_MESSAGE} from 'actions/app';
 import { CHANGE_FIELD_VALUE } from 'actions/user';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   contactEmail: '',
   contactName: '',
   contactContent: '',
-  contactSubmitMessage: {
+  formSubmitMessage: {
     success: false,
     text: '',
   },
@@ -38,10 +38,10 @@ function reducer(state = initialState, action = {}) {
           isBurgerOpen: false,
         };
 
-    case CHANGE_CONTACT_SUBMIT_MESSAGE: 
+    case CHANGE_FORM_SUBMIT_MESSAGE: 
       return {
         ...state,
-        contactSubmitMessage: {
+        formSubmitMessage: {
           success: action.success,
           text: action.message,
         }
@@ -59,7 +59,6 @@ function reducer(state = initialState, action = {}) {
         ...state,
         formFieldErrors: {
           ...state.formFieldErrors,
-          // [action.field] : action.message,
           [action.formName] : {
             ...state.formFieldErrors[action.formName],
             [action.field]: action.message,

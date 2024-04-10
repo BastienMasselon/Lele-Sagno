@@ -8,10 +8,10 @@ export const closeBurger = () => ({
   type: CLOSE_BURGER,
 });
 
-// Changing the message displayed when user submits the contact form
-export const CHANGE_CONTACT_SUBMIT_MESSAGE = 'CHANGE_CONTACT_SUBMIT_MESSAGE';
-export const changeContactSubmitMessage = (success, message) => ({
-  type: CHANGE_CONTACT_SUBMIT_MESSAGE,
+// Changing the message displayed when user submits a form
+export const CHANGE_FORM_SUBMIT_MESSAGE = 'CHANGE_FORM_SUBMIT_MESSAGE';
+export const changeFormSubmitMessage = (success, message) => ({
+  type: CHANGE_FORM_SUBMIT_MESSAGE,
   success,
   message,
 });

@@ -18,6 +18,7 @@ import Post from 'components/Post/Post';
 import Recipe from 'components/Recipe/Recipe';
 import Loading from 'components/Loading/Loading';
 import Error from 'components/Error/Error';
+import FormModal from 'components/FormModal/FormModal';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -27,6 +28,7 @@ function App() {
   const location = useLocation();
 
   const { loadingPosts } = useSelector((state) => state.data);
+  const { formSubmitMessage } = useSelector((state) => state.app);
 
   // using location in effect hook to scroll back to the top of the page every time the user switch pages
   useEffect(
@@ -43,8 +45,6 @@ function App() {
     dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
-
-
 
   return (
     <div className="App font-brandon flex flex-col min-h-screen justify-between">
@@ -65,6 +65,8 @@ function App() {
               <Route path="/recipe/:slug" element={<Recipe />} />
               <Route path="*" element={<Error />} />
             </Routes>
+
+            {(formSubmitMessage.text !== '') && <FormModal success={formSubmitMessage.success} message={formSubmitMessage.text} />}
           </main>
     
           <Footer />
