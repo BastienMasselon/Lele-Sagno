@@ -17,7 +17,7 @@ function Recipes() {
         recipeList.map( (recipe) => 
             <RecipeCard
                 key={recipe.id}
-                thumbnail={recipe._embedded && recipe._embedded["wp:featuredmedia"] ? recipe._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
+                thumbnail={recipe.featured_image ? recipe.featured_image : noImage}
                 title={recipe.title.rendered}
                 preparationTime={recipe.acf.preparationTime ? recipe.acf.preparationTime : null}
                 recipeId={recipe.id}

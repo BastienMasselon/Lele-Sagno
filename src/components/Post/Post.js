@@ -13,7 +13,6 @@ function Post() {
   const { slug } = useParams();
   // find the post matching the slug
   const post = findPost(postList, slug);
-  console.log(post);
   
   // send user to error page if article does not exist
   if (!post) {

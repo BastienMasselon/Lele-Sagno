@@ -24,7 +24,7 @@ function Recipe() {
         <div className='w-full rounded-lg relative'>
             <img 
                 className='object-cover h-64 w-full rounded-lg'
-                src={recipe._embedded && recipe._embedded["wp:featuredmedia"] ? recipe._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
+                src={recipe.featured_image ? recipe.featured_image : noImage}
             />
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 italic text-center text-white [text-shadow:_0_1px_5px_rgb(0_0_0_/_100%)] bg-black/40 w-full py-1 px-2 text-2xl'>
                 <h1 dangerouslySetInnerHTML={{__html: recipe.title.rendered}}></h1>

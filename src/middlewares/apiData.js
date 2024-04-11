@@ -36,7 +36,7 @@ const apiData = (store) => (next) => (action) => {
 
     case FETCH_ALL_POSTS: {
         const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
-        const requestUrl = `${wordpressDomain}/posts?_embed`
+        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image`
 
         // requesting posts to the wordpress API
         axios.get(requestUrl)
@@ -55,7 +55,7 @@ const apiData = (store) => (next) => (action) => {
 
     case FETCH_ALL_RECIPES: {
         const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
-        const requestUrl = `${wordpressDomain}/recipes?_embed`
+        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image,acf`
 
         // requesting recipes to the wordpress API
         axios.get(requestUrl)

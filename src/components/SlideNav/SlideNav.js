@@ -21,7 +21,7 @@ function SlideNav({data, bgColor, buttonsColor, postType}) {
                         key={post.id}
                     >
                         <HomeCard
-                            thumbnail={post._embedded && post._embedded["wp:featuredmedia"] ? post._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
+                            thumbnail={post.featured_image  ? post.featured_image  : noImage}
                             title={post.title.rendered}
                             buttonColor={buttonsColor}
                             slug={post.slug}
