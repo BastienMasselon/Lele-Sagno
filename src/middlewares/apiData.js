@@ -26,7 +26,9 @@ const apiData = (store) => (next) => (action) => {
                     store.dispatch(saveAllYoutubeVideos(filteredVideos));
                 }
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // console.log(error);
+            })
 
         next(action);
         break;  
@@ -44,8 +46,11 @@ const apiData = (store) => (next) => (action) => {
                 }
             }) 
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
             })
+
+        next(action);
+        break;
     }
 
     case FETCH_ALL_RECIPES: {
@@ -60,8 +65,11 @@ const apiData = (store) => (next) => (action) => {
                 }
             }) 
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
             })
+
+        next(action);
+        break;
     }
 
     default:

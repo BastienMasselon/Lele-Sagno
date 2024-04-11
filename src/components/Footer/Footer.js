@@ -5,29 +5,35 @@ import fbLogo from 'assets/img/social media/icons8-facebook.svg';
 import instaLogo from 'assets/img/social media/icons8-instagram.svg';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import FieldError from 'components/Error/FieldError';
+import HoneypotField from 'components/HoneypotField/HoneypotField';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { validateEmail } from 'utils/validators';
 
 // == Composant
 function Footer() {
-
   const dispatch = useDispatch();
-  const { newsletterEmail, formFieldErrors } = useSelector((state) => state.app);
+  const { newsletterEmail, newsletterPhone,  formFieldErrors } = useSelector((state) => state.app);
+
   const handleChange = (evt) => {
     dispatch(changeFieldValue(evt.target.name, evt.target.value));
-    if (!validateEmail(evt.target.value)) {
-      dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
-    } 
-    else {
-      dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, ''));
+
+    // testing assertions only if field is not a honeypot
+    if ( evt.target.name !== 'newsletterPhone') {
+      if (!validateEmail(evt.target.value)) {
+        dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+      } 
+      else {
+        dispatch(changeFormFieldErrorMessage('newsletter', evt.target.name, ''));
+      }
     }
   }
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const isValid = Object.values(formFieldErrors).every((error) => error === '');
-        if (isValid && contactEmail !== '') dispatch(submitContactForm());
-    dispatch(submitNewsletterForm());
+    const isValid = Object.values(formFieldErrors.newsletter).every((error) => error === '');
+    // Only send form if it is valid and honeypot field is not filled
+    if (isValid && newsletterEmail.trim() !== '' && newsletterPhone.trim() === '') dispatch(submitNewsletterForm());
   }
 
   return (
@@ -41,6 +47,11 @@ function Footer() {
             <p className='font-brandon-med text-lg'>Ne rate aucune de mes publications !</p>
             <p>Reçois une notification directement dans ta boîte mail.</p>
           </div>
+          <HoneypotField 
+            name='newsletterPhone'
+            value={newsletterPhone}
+            onChange={handleChange}
+          />
           <input 
             type="email" 
             name="newsletterEmail"

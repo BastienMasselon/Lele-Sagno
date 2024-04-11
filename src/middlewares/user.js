@@ -42,6 +42,9 @@ const user = (store) => (next) => (action) => {
                 // Notifying the user that the message couldn't be sent.
                 store.dispatch(changeFormSubmitMessage(false, "Votre message n'a pas pu être envoyé. Veuillez ré-essayer."));
             });
+
+        next(action);
+        break;
     }
 
 
@@ -76,6 +79,9 @@ const user = (store) => (next) => (action) => {
             .catch((error) => {
                 store.dispatch(changeFormSubmitMessage(true, 'l\'adresse n\'a pas pu être ajoutée. Veuillez essayer à nouveau ou nous contacter si le problème persiste'))
             })
+
+        next(action);
+        break;
     }
 
     default:

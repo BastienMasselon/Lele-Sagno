@@ -4,9 +4,11 @@ import { CHANGE_FIELD_VALUE } from 'actions/user';
 const initialState = {
   isBurgerOpen: false,
   newsletterEmail: '',
+  newsletterPhone: '', // newsletter honeypot field
   contactEmail: '',
   contactName: '',
   contactContent: '',
+  contactWebsite: '', // contact honeypot field
   formSubmitMessage: {
     success: false,
     text: '',
