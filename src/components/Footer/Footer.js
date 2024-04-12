@@ -37,8 +37,8 @@ function Footer() {
   }
 
   return (
-    <div className="mt-10 p-4 bg-lele-blue text-slate-200">
-      <div className='flex flex-col items-center'>
+    <footer className="mt-10 p-4 bg-lele-blue text-slate-200 lg:flex lg:justify-center">
+      <div className='flex flex-col items-center lg:w-fit '>
         <form 
           className='flex flex-col justify-center text-black w-11/12'
           onSubmit={handleSubmit}
@@ -52,31 +52,35 @@ function Footer() {
             value={newsletterPhone}
             onChange={handleChange}
           />
-          <input 
-            type="email" 
-            name="newsletterEmail"
-            placeholder='Votre adresse mail'
-            required
-            value={newsletterEmail}
-            onChange={handleChange}
-            className='rounded-md h-8 mt-2 p-1'
-          />
-          {formFieldErrors.newsletter.newsletterEmail !== '' ? <FieldError message={formFieldErrors.newsletter.newsletterEmail}/> : '' }
-          <input 
-            type="submit" 
-            value="S'inscrire"
-            className='font-brandon-med text-lg bg-lele-orange rounded-md px-2 mt-2 h-8'
-          />
+          <div className='flex flex-col lg:flex-row'>
+            <div className='lg:w-80 lg:mr-3'>
+              <input
+                type="email"
+                name="newsletterEmail"
+                placeholder='Votre adresse mail'
+                required
+                value={newsletterEmail}
+                onChange={handleChange}
+                className='w-full rounded-md h-8 mt-2 p-2 lg:w-full'
+              />
+              {formFieldErrors.newsletter.newsletterEmail !== '' ? <FieldError message={formFieldErrors.newsletter.newsletterEmail}/> : '' }
+            </div>
+            <input
+              type="submit"
+              value="S'inscrire"
+              className='font-brandon-med text-lg bg-lele-orange rounded-md px-2 mt-2 h-8'
+            />
+          </div>
         </form>
       </div>
 
       {/* social media section */}
-      <div className='flex center justify-evenly mt-4'>
+      <div className='flex center justify-evenly mt-4 lg:items-center lg:ml-8'>
         <Link 
             to='https://www.facebook.com/lelesagno'
             target='_blank'
             rel="noopener noreferrer"
-            className='w-12'
+            className='w-12 lg:mx-3'
         >
             <img src={fbLogo}></img>
         </Link>
@@ -84,7 +88,7 @@ function Footer() {
             to='https://www.instagram.com/lelesagno/'
             target='_blank'
             rel="noopener noreferrer"
-            className='w-12'
+            className='w-12 lg:mx-3'
         >
             <img src={instaLogo}></img>
         </Link>
@@ -92,12 +96,12 @@ function Footer() {
             to='https://www.youtube.com/@lelesagno1187'
             target='_blank'
             rel="noopener noreferrer"
-            className='w-12'
+            className='w-12 lg:mx-3'
         >
             <img src={youtubeLogo}></img>
         </Link>
       </div>
-    </div>
+    </footer>
   );
 }
 
