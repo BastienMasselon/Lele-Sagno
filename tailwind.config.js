@@ -21,6 +21,9 @@ module.exports = {
         'brandon-med': ["BRANDON-MED", "cursive"],
         'brandon-fat': ["BRANDON-BLD", "cursive"],
       },
+      backgroundImage: {
+        'foret-sacre': "url(/src/assets/img/foret-sacre.png)"
+      },
       keyframes: {
         wiggle: {
           '0%, 100%': { transform: 'rotate(-2deg)' },

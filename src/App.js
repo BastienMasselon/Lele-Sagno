@@ -47,14 +47,14 @@ function App() {
   }, []);
 
   return (
-    <div className="App font-brandon flex flex-col min-h-screen justify-between">
+    <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-foret-sacre">
       {loadingPosts && <Loading />}
 
       {!loadingPosts && (
         <>
           <Header />
     
-          <main className="mt-16">
+          <main className="mt-16 lg:w-9/12 bg-white lg:m-auto lg:my-20 lg:shadow-[0_0_40px_15px_rgba(0,0,0,0.3)] lg:rounded-sm">
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/videos" element={<Videos />} />
