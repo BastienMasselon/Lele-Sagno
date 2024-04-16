@@ -13,7 +13,6 @@ function Recipe() {
   const { slug } = useParams();
   // find the recipe matching the slug
   const recipe = findPost(recipeList, slug);
-  console.log(recipe);
   
   // send user to error page if recipe does not exist
   if (!recipe) {
