@@ -58,7 +58,7 @@ function Contact() {
       <p className="text-center px-4 pt-4 text-xl">Une demande, une info, un message ? N'hésite pas à me contacter ! :)</p>
 
         <form 
-            className="p-4 flex flex-col"
+            className="p-4 flex flex-col lg:w-[36rem] lg:m-auto"
             onSubmit={handleSubmitContactForm}
         >
             <label

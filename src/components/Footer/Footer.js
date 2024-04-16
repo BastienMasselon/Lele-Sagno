@@ -68,7 +68,7 @@ function Footer() {
             <input
               type="submit"
               value="S'inscrire"
-              className='font-brandon-med text-lg bg-lele-orange rounded-md px-2 mt-2 h-8'
+              className='font-brandon-med text-lg bg-lele-orange text-lele-blue rounded-md px-2 mt-2 h-8 hover:cursor-pointer hover:shadow-lg hover:text-black'
             />
           </div>
         </form>
