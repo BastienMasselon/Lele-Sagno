@@ -54,11 +54,11 @@ function Contact() {
     
 
   return (
-      <div className="">
+      <div className="md:py-6">
       <p className="text-center px-4 pt-4 text-xl">Une demande, une info, un message ? N'hésite pas à me contacter ! :)</p>
 
         <form 
-            className="p-4 flex flex-col lg:w-[36rem] lg:m-auto"
+            className="p-4 flex flex-col md:w-[36rem] md:mx-auto"
             onSubmit={handleSubmitContactForm}
         >
             <label
