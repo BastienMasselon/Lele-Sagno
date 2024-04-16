@@ -56,7 +56,7 @@ function Home() {
       <div className='flex justify-center mt-6'>
         <Link 
           to='/posts'
-          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-orange'
+          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-orange border-b-[3px] border-[#99540c]'
         >
           <img 
             src={arrowBlack}
@@ -84,13 +84,13 @@ function Home() {
       <div className='flex justify-center mt-6'>
         <Link 
           to='/recipes'
-          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-blue'
+          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-blue border-b-[3px] border-[#003c59]'
         >
           <img 
             src={arrowWhite}
             className='w-7 fill-white animate-bounce'
           />
-          <p className='font-brandon-med -mt-1 text-white text-lg'>
+          <p className='font-brandon-med -mt-1 text-white text-lg '>
             Toutes mes recettes
           </p>
         </Link>

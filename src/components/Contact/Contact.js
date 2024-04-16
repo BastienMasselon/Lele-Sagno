@@ -3,60 +3,63 @@
 import { changeFormFieldErrorMessage } from "actions/app";
 import { submitContactForm, changeFieldValue } from "actions/user";
 import FieldError from "components/Error/FieldError";
-import FormModal from "components/FormModal/FormModal";
+import HoneypotField from "components/HoneypotField/HoneypotField";
 import { useDispatch, useSelector } from "react-redux";
 import { isFieldEmpty, isStringLongerThan, validateEmail } from "utils/validators";
 
 // == Composant
 function Contact() {
-    const { contactEmail, contactName, contactContent, contactSubmitMessage, formFieldErrors } = useSelector( (state) => state.app)
+    const { contactEmail, contactName, contactContent, contactWebsite, formFieldErrors } = useSelector( (state) => state.app)
     const dispatch = useDispatch();
-    const handleChange = (evt) => {
+    const handleChangeContactFields = (evt) => {
         dispatch(changeFieldValue(evt.target.name, evt.target.value));
-        // validating user's input
-        switch (evt.target.name) {
-            case 'contactEmail' :
-                if (!validateEmail(evt.target.value)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+
+        // validating user's input (only if it is not honeypot field)
+        if (evt.target.name !== 'contactWebsite') {
+            switch (evt.target.name) {
+                case 'contactEmail' :
+                    if (!validateEmail(evt.target.value)) {
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Veuillez entrer une adresse email valide (exemple : "james.bond@gmail.com")'));
+                        break;
+                    } 
+                    else {
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, ''));
+                    }
                     break;
-                } 
-                else {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
-                }
-                break;
-            case 'contactName' :
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, isFieldEmpty(evt.target.value) ? 'Ce champ est requis' : ''));
-                    break;
-            case 'contactContent' :
-                if (isFieldEmpty(evt.target.value)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Ce champ est requis'));
-                    console.log(formFieldErrors)
-                    break;
-                }
-                else if (!isStringLongerThan(evt.target.value, 10)) {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, 'Veuillez écrire un message d\'au moins 10 caractères'));
-                    break;
-                }
-                else {
-                    dispatch(changeFormFieldErrorMessage(evt.target.name, ''));
-                }
+                case 'contactName' :
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, isFieldEmpty(evt.target.value) ? 'Ce champ est requis' : ''));
+                        break;
+                case 'contactContent' :
+                    if (isFieldEmpty(evt.target.value)) {
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Ce champ est requis'));
+                        break;
+                    }
+                    else if (!isStringLongerThan(evt.target.value, 10)) {
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, 'Veuillez écrire un message d\'au moins 10 caractères'));
+                        break;
+                    }
+                    else {
+                        dispatch(changeFormFieldErrorMessage('contact', evt.target.name, ''));
+                    }
+            }
         }
     }
-    const handleSubmit = (evt) => {
+    const handleSubmitContactForm = (evt) => {
         evt.preventDefault();
         // Checking for form errors before trying to send it
-        const isValid = Object.values(formFieldErrors).every((error) => error === '');
-        if (isValid && contactEmail !== '') dispatch(submitContactForm());
+        const isValid = Object.values(formFieldErrors.contact).every((error) => error === '');
+        // also checking if honeypot has been filled before sending form
+        if (isValid && contactEmail.trim() !== '' && contactWebsite.trim() === '') dispatch(submitContactForm());
     }
     
 
   return (
-      <div className="">
+      <div className="md:py-6">
       <p className="text-center px-4 pt-4 text-xl">Une demande, une info, un message ? N'hésite pas à me contacter ! :)</p>
 
         <form 
-            className="p-4 flex flex-col"
-            onSubmit={handleSubmit}
+            className="p-4 flex flex-col md:w-[36rem] md:mx-auto"
+            onSubmit={handleSubmitContactForm}
         >
             <label
                 className="flex flex-col text-lg mt-6"
@@ -67,11 +70,11 @@ function Contact() {
                     type="email"
                     name="contactEmail"
                     value={contactEmail}
-                    onChange={handleChange}
+                    onChange={handleChangeContactFields}
                     placeholder='Votre adresse mail'
                     required
                 />
-                {formFieldErrors.contactEmail !== '' ? <FieldError message={formFieldErrors.contactEmail}/> : '' }
+                {formFieldErrors.contact.contactEmail !== '' ? <FieldError message={formFieldErrors.contact.contactEmail}/> : '' }
             </label>
                 
             <label
@@ -83,12 +86,15 @@ function Contact() {
                     type="text"
                     name="contactName"
                     value={contactName}
-                    onChange={handleChange}
+                    onChange={handleChangeContactFields}
                     placeholder='Votre nom/pseudonyme'
                     required
                 />
-                {formFieldErrors.contactName !== '' ? <FieldError message={formFieldErrors.contactName}/> : '' }
+                {formFieldErrors.contact.contactName !== '' ? <FieldError message={formFieldErrors.contact.contactName}/> : '' }
             </label>
+            
+            <HoneypotField name='contactWebsite' value={contactWebsite} onChange={handleChangeContactFields}/>
+
             <label
                 className="flex flex-col text-lg mt-8"
             >
@@ -97,12 +103,12 @@ function Contact() {
                     className="text-xl border border-lele-blue/60 rounded-b rounded-tr p-1"
                     name="contactContent"
                     value={contactContent}
-                    onChange={handleChange}
+                    onChange={handleChangeContactFields}
                     rows={6}
                     placeholder="Ecrivez votre message ici"
                     required
                 />
-                {formFieldErrors.contactContent !== '' ? <FieldError message={formFieldErrors.contactContent}/> : '' }
+                {formFieldErrors.contact.contactContent !== '' ? <FieldError message={formFieldErrors.contact.contactContent}/> : '' }
             </label>
 
             <p className="mt-6">* : champs obligatoires</p>
@@ -121,11 +127,8 @@ function Contact() {
                     </g>
                 </svg>
             </div>
-
-
         </form>
 
-        {(contactSubmitMessage.text !== '') && <FormModal success={contactSubmitMessage.success} message={contactSubmitMessage.text} />}
     </div>
   );
 }

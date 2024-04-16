@@ -7,16 +7,16 @@ function RecipeCard({ thumbnail, title, preparationTime, recipeId, slug}) {
   return (
     <Link
         to={`/recipe/${slug}`}
-        className="mt-12 bg-lele-blue/5 rounded-xl"
+        className="overflow-hidden bg-lele-blue/5 rounded-xl rounded-bl-sm md:w-2/5 xl:w-[30%] 2xl:w-[20%]"
     >
-      <div className='w-full '>
+      <div className='w-full'>
         <img 
         src={thumbnail} 
-        alt="poilée de nouilles appétissante" 
-        className='object-cover h-60 w-full rounded-t-xl'
+        alt={title}
+        className='object-cover h-60 lg:h-52 w-full rounded-t-xl xl:h-60'
         />
       </div>
-      <div className='p-3 border-l-8 border-lele-orange text-lele-orange rounded-b-xl'>
+      <div className=' p-3 h-full border-l-[15px] border-lele-orange text-lele-orange '>
         <p className='font-brandon-fat uppercase text-md tracking-wide' dangerouslySetInnerHTML={{__html: title}}></p>
         <div className="flex items-center mt-3">
         {preparationTime !== null && (
@@ -40,7 +40,7 @@ RecipeCard.propTypes = {
   title: PropTypesLib.string.isRequired,
   preparationTime: PropTypesLib.string,
   recipeId: PropTypesLib.number.isRequired,
-  slug: PropTypesLib.string,
+  slug: PropTypesLib.string.isRequired,
 }
 // == Export
 export default RecipeCard;

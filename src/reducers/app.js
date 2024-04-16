@@ -1,22 +1,28 @@
-import {CLOSE_BURGER, CHANGE_CONTACT_SUBMIT_MESSAGE, TOGGLE_BURGER, CHANGE_FORM_FIELD_ERROR_MESSAGE} from 'actions/app';
+import {CLOSE_BURGER, CHANGE_FORM_SUBMIT_MESSAGE, TOGGLE_BURGER, CHANGE_FORM_FIELD_ERROR_MESSAGE} from 'actions/app';
 import { CHANGE_FIELD_VALUE } from 'actions/user';
 
 const initialState = {
   isBurgerOpen: false,
   newsletterEmail: '',
+  newsletterPhone: '', // newsletter honeypot field
   contactEmail: '',
   contactName: '',
   contactContent: '',
-  contactSubmitMessage: {
+  contactWebsite: '', // contact honeypot field
+  formSubmitMessage: {
     success: false,
     text: '',
   },
   formFieldErrors: {
-    newsletterEmail: '',
-    contactEmail: '',
-    contactName: '',
-    contactContent: '',
-  }
+    contact: {
+      contactEmail: '',
+      contactName: '',
+      contactContent: '',
+    },
+    newsletter: {
+      newsletterEmail: '',
+    }
+  },
 };
 
 function reducer(state = initialState, action = {}) {
@@ -34,10 +40,10 @@ function reducer(state = initialState, action = {}) {
           isBurgerOpen: false,
         };
 
-    case CHANGE_CONTACT_SUBMIT_MESSAGE: 
+    case CHANGE_FORM_SUBMIT_MESSAGE: 
       return {
         ...state,
-        contactSubmitMessage: {
+        formSubmitMessage: {
           success: action.success,
           text: action.message,
         }
@@ -55,7 +61,10 @@ function reducer(state = initialState, action = {}) {
         ...state,
         formFieldErrors: {
           ...state.formFieldErrors,
-          [action.field] : action.message,
+          [action.formName] : {
+            ...state.formFieldErrors[action.formName],
+            [action.field]: action.message,
+          }
         }
       };
         
