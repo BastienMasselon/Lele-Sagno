@@ -5,10 +5,12 @@ import { submitContactForm, changeFieldValue } from "actions/user";
 import FieldError from "components/Error/FieldError";
 import HoneypotField from "components/HoneypotField/HoneypotField";
 import { useDispatch, useSelector } from "react-redux";
+import { setDocumentTitle } from "utils/utils";
 import { isFieldEmpty, isStringLongerThan, validateEmail } from "utils/validators";
 
 // == Composant
 function Contact() {
+    setDocumentTitle('Contact');
     const { contactEmail, contactName, contactContent, contactWebsite, formFieldErrors } = useSelector( (state) => state.app)
     const dispatch = useDispatch();
     const handleChangeContactFields = (evt) => {

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { findPost } from 'utils/selectors';
 import noImage from "assets/img/empty-image.png";
+import { setDocumentTitle, unescapeString } from 'utils/utils';
 
 // == Composant
 function Recipe() {
@@ -18,6 +19,8 @@ function Recipe() {
   if (!recipe) {
     return <Navigate to="/error" replace={true} />;
   }
+
+  setDocumentTitle(unescapeString(recipe.title.rendered));
   return (
     <div className="recipe_container flex flex-col p-4 lg:py-8">
         <div className='w-full rounded-lg relative md:w-[600px] md:mx-auto'>
@@ -43,7 +46,7 @@ function Recipe() {
                 </div>
             </div>
         </div>
-      <div className="flex flex-col mt-5 text-xl lg:w-[800px] lg:mx-auto xl:w-[1000px]" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
+      <div className="flex flex-col max-w-fit mt-5 text-xl lg:w-[800px] lg:mx-auto xl:w-[1000px]" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
       <Link 
         className="flex items-center bg-lele-orange text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-10 h-12 shadow-md border-b-[4px] border-[#99540c] hover:border-b-2 lg:mx-auto border-box"
         to="/recipes"

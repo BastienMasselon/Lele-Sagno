@@ -8,11 +8,13 @@ import YoutubeEmbed from 'components/YoutubeEmbed/YoutubeEmbed';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { setDocumentTitle } from 'utils/utils';
 
 // == Composant
 function Home() {
+  setDocumentTitle('Accueil');
   const { postList, recipeList } = useSelector((state) => state.data);
-  const i = [1, 2, 3, 4, 5]
+  
   return (
     <div>
 
@@ -22,7 +24,7 @@ function Home() {
           <img
             className="object-cover h-96 w-full"
             src={leleHomePicture}
-            alt="Lele Sagno smiling"
+            alt="Lele Sagno looking good"
           >
           </img>
         </div>

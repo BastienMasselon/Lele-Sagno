@@ -4,9 +4,11 @@ import YoutubeEmbed from "components/YoutubeEmbed/YoutubeEmbed";
 import DOMPurify from "dompurify";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setDocumentTitle } from "utils/utils";
 
 // == Composant
 function Videos() {
+  setDocumentTitle('Vidéos');
   const { allYoutubeVideos } = useSelector((state) => state.data);
   return (
     <div className="pt-6 p-2 md:p-8">

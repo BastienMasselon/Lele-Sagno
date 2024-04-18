@@ -2,12 +2,12 @@
 import { useSelector } from 'react-redux';
 import RecipeCard from './RecipeCard/RecipeCard';
 import noImage from "assets/img/empty-image.png";
+import { setDocumentTitle } from 'utils/utils';
 
 
 // == Composant
 function Recipes() {
-    // const for loop, to simulate array of data that will be retrieved from the API
-    const arrayForLoop = [1, 2, 3, 4, 5]
+    setDocumentTitle('recettes');
     const { recipeList } = useSelector((state) => state.data);
 
   return (
