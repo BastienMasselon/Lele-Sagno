@@ -19,10 +19,10 @@ function Recipe() {
     return <Navigate to="/error" replace={true} />;
   }
   return (
-    <div className="recipe_container flex flex-col p-4">
-        <div className='w-full rounded-lg relative'>
+    <div className="recipe_container flex flex-col p-4 lg:py-8">
+        <div className='w-full rounded-lg relative md:w-[600px] md:mx-auto'>
             <img 
-                className='object-cover h-64 w-full rounded-lg'
+                className='object-cover h-64 w-full rounded-lg md:h-80 lg:h-96'
                 src={recipe.featured_image ? recipe.featured_image : noImage}
             />
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 italic text-center text-white [text-shadow:_0_1px_5px_rgb(0_0_0_/_100%)] bg-black/40 w-full py-1 px-2 text-2xl'>
@@ -43,9 +43,9 @@ function Recipe() {
                 </div>
             </div>
         </div>
-      <div className="flex flex-col mt-5 text-xl" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
+      <div className="flex flex-col mt-5 text-xl lg:w-[800px] lg:mx-auto xl:w-[1000px]" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
       <Link 
-        className="flex items-center bg-lele-orange text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-10 h-12 shadow-md"
+        className="flex items-center bg-lele-orange text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-10 h-12 shadow-md border-b-[4px] border-[#99540c] hover:border-b-2 lg:mx-auto border-box"
         to="/recipes"
       >
         <img 

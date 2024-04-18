@@ -56,7 +56,7 @@ function Home() {
       <div className='flex justify-center mt-6'>
         <Link 
           to='/posts'
-          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-orange border-b-[3px] border-[#99540c]'
+          className='flex flex-col h-[75px] items-center py-2 px-5 rounded-full shadow-md bg-lele-orange border-b-[4px] border-[#99540c] hover:border-b-2 box-border'
         >
           <img 
             src={arrowBlack}
@@ -84,7 +84,7 @@ function Home() {
       <div className='flex justify-center mt-6'>
         <Link 
           to='/recipes'
-          className='flex flex-col items-center py-2 px-5 rounded-full shadow-md bg-lele-blue border-b-[3px] border-[#003c59]'
+          className='flex flex-col h-[75px] items-center py-2 px-5 rounded-full shadow-md bg-lele-blue border-b-[4px] border-[#003c59] hover:border-b-2 box-border'
         >
           <img 
             src={arrowWhite}
