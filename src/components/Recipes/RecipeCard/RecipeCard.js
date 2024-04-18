@@ -1,6 +1,7 @@
 // == Import
 import { Link } from 'react-router-dom';
 import PropTypesLib from 'prop-types';
+import { makeExcerpt } from 'utils/utils';
 
 // == Composant
 function RecipeCard({ thumbnail, title, preparationTime, recipeId, slug}) {
@@ -17,7 +18,7 @@ function RecipeCard({ thumbnail, title, preparationTime, recipeId, slug}) {
         />
       </div>
       <div className=' p-3 h-full border-l-[15px] border-lele-orange text-lele-orange '>
-        <p className='font-brandon-fat uppercase text-md tracking-wide' dangerouslySetInnerHTML={{__html: title}}></p>
+        <p className='font-brandon-fat uppercase text-md tracking-wide' dangerouslySetInnerHTML={{__html: makeExcerpt(title)}}></p>
         <div className="flex items-center mt-3">
         {preparationTime !== null && (
           <>
