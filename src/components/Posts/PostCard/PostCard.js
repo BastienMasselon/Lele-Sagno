@@ -18,7 +18,7 @@ function PostCard({ thumbnail, title, content, publishedDate, postId, slug}) {
         className='object-cover h-60 lg:h-52 w-full rounded-t-xl xl:h-60'
         />
       </div>
-      <div className='p-3 h-full border-l-[12px] border-lele-blue text-lele-blue rounded-b-xl'>
+      <div className='p-3 h-full border-l-[12px] border-lele-blue text-lele-blue'>
         <p className='font-brandon-fat uppercase text-md tracking-wide' dangerouslySetInnerHTML={{__html: makeExcerpt(title)}}></p>
         <div className="flex justify-end items-center mt-3 mr-3">
           <span>publié le <time>{formatedDate}</time></span>
