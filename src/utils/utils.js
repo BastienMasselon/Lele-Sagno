@@ -45,3 +45,36 @@ export function unescapeString(str) {
   escape.innerHTML = str;
   return escape.textContent;
 }
+
+/**
+ * Get latest youtube video infos from Lele Sagno's channel
+ * @param {int} limit // number of videos (max : 10)
+ * @return {array} an array of video ids sorted by date (desc)
+ */
+export function getLatestVideosInfos(limit) {
+  const cid = 'UCDXo3PHjEJrIa_2aZ6vxToQ';
+  // Get latest videos with rss api in xml
+  const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}`)
+  // Preparing rss2json API request to convert xml to json object
+  const reqURL = `https://api.rss2json.com/v1/api.json?rss_url=${channelURL}`;
+
+  const videos = [];
+
+  fetch(reqURL)
+    .then(response => response.json())
+    .then(result => {
+        for (let i = 0 ; i < limit ; i++) {
+          // Extracting info from Json response
+          let videoLink = result.items[i].link;
+          let currentVideo = {
+            link: videoLink,
+            id: videoLink.substr(videoLink.indexOf("=") + 1),
+            title: result.items[i].title
+          };
+          videos.push(currentVideo);
+        }
+      })
+      .catch(error => console.log('error', error));
+        
+  return videos;
+}

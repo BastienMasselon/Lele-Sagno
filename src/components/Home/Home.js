@@ -10,12 +10,18 @@ import instaLogo from 'assets/img/social media/icons8-instagram.svg';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { setDocumentTitle } from 'utils/utils';
+import { getLatestVideosInfos, setDocumentTitle } from 'utils/utils';
+import { useEffect } from 'react';
 
 // == Composant
 function Home() {
   setDocumentTitle('Accueil');
   const { postList, recipeList } = useSelector((state) => state.data);
+
+  useEffect(() => {
+    // TODO fetch latest youtube video and add it to app data state
+    const video = getLatestVideosInfos(1);
+  }, [])
   
   return (
     <div className='lg:py-8'>
@@ -136,7 +142,8 @@ function Home() {
       <h2 className="font-brandon-fat text-xl text-lele-blue text-center tracking-wider uppercase mt-12 lg:text-2xl">ma dernière vidéo</h2>
 
       <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
-        <YoutubeEmbed embedId='rCc5isgY5Qc' />
+        {/* TODO : Dynamic id is not working here (must add to the state, set loading etc...) */}
+        <YoutubeEmbed embedId={typeof id !== 'undefined' ? video[0].id : 'rCc5isgY5Qc'} />
       </div>
 
       <div className='text-xl text-center mt-6 mx-6 lg:text-2xl'>
