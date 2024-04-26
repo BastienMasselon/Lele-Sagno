@@ -51,7 +51,7 @@ export function unescapeString(str) {
  * @param {int} limit // number of videos (max : 10)
  * @return {array} an array of video ids sorted by date (desc)
  */
-export function getLatestVideosInfos(limit) {
+export async function getLatestVideosInfos(limit) {
   const cid = 'UCDXo3PHjEJrIa_2aZ6vxToQ';
   // Get latest videos with rss api in xml
   const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}`)
@@ -60,7 +60,21 @@ export function getLatestVideosInfos(limit) {
 
   const videos = [];
 
-  fetch(reqURL)
+  // const promise = await fetch(reqURL);
+  // const result = await promise.json();
+  // for (let i = 0 ; i < limit ; i++) {
+  //   // Extracting info from Json response
+  //   let videoLink = result.items[i].link;
+  //   let currentVideo = {
+  //     link: videoLink,
+  //     id: videoLink.substr(videoLink.indexOf("=") + 1),
+  //     title: result.items[i].title
+  //   };
+  //   videos.push(currentVideo);
+  // } 
+  // return videos
+
+  await fetch(reqURL)
     .then(response => response.json())
     .then(result => {
         for (let i = 0 ; i < limit ; i++) {
@@ -73,8 +87,7 @@ export function getLatestVideosInfos(limit) {
           };
           videos.push(currentVideo);
         }
-      })
-      .catch(error => console.log('error', error));
-        
+      });
+
   return videos;
 }
