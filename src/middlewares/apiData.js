@@ -1,4 +1,4 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, saveAllYoutubeVideos, saveHomeVideo, savePosts, saveRecipes } from "actions/apiData";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
 
@@ -42,6 +42,15 @@ const apiData = (store) => (next) => (action) => {
 
         next(action);
         break;  
+    }
+
+    case FETCH_HOME_VIDEO: {
+        getLatestVideosInfos(1).then(result => {
+            const video = result[0];
+            if (typeof video !== undefined && result.length > 0) {
+                store.dispatch(saveHomeVideo(video));
+            }
+        });
     }
 
     case FETCH_ALL_POSTS: {

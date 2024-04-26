@@ -16,8 +16,7 @@ import { useEffect } from 'react';
 // == Composant
 function Home() {
   setDocumentTitle('Accueil');
-  const { postList, recipeList } = useSelector((state) => state.data);
-
+  const { postList, recipeList, homeVideo } = useSelector((state) => state.data);
   useEffect(() => {
     // TODO fetch latest youtube video and add it to app data state
     const video = getLatestVideosInfos(1);
@@ -143,7 +142,7 @@ function Home() {
 
       <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
         {/* TODO : Dynamic id is not working here (must add to the state, set loading etc...) */}
-        <YoutubeEmbed embedId={typeof id !== 'undefined' ? video[0].id : 'rCc5isgY5Qc'} />
+        <YoutubeEmbed embedId={homeVideo.id !== 'undefined' ? homeVideo.id : 'rCc5isgY5Qc'} />
       </div>
 
       <div className='text-xl text-center mt-6 mx-6 lg:text-2xl'>

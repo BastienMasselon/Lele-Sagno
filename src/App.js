@@ -5,7 +5,7 @@ import './styles/wordpress/style.min.css';
 
 // Components
 import { useEffect } from 'react';
-import { fetchAllPosts, fetchAllRecipes, fetchAllYoutubeVideos } from 'actions/apiData';
+import { fetchAllPosts, fetchAllRecipes, fetchAllYoutubeVideos, fetchHomeVideo } from 'actions/apiData';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -42,6 +42,7 @@ function App() {
   
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
+    dispatch(fetchHomeVideo());
     dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
