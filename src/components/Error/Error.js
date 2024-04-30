@@ -2,9 +2,11 @@
 
 import { Link } from "react-router-dom";
 import palmTrees from 'assets/img/palm-trees.PNG';
+import { setDocumentTitle } from "utils/utils";
 
 // == Composant
 function Error() {
+    setDocumentTitle('Erreur');
     return (
         <div className="flex flex-col items-center justify-center mt-10 p-2">
             <p className="text-center text-lg">Désolé, une erreur s'est produite ou bien cette page n'existe pas.</p>

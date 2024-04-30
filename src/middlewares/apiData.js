@@ -1,5 +1,6 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, saveAllYoutubeVideos, saveHomeVideo, savePosts, saveRecipes } from "actions/apiData";
 import axios from "axios";
+import { getLatestVideosInfos } from "utils/utils";
 
 const apiData = (store) => (next) => (action) => {
   switch (action.type) {
@@ -7,6 +8,7 @@ const apiData = (store) => (next) => (action) => {
     // fetch all youtube videos from youtube API and save retrieved data in the state
     case FETCH_ALL_YOUTUBE_VIDEOS: {
         
+        /*
         // preparing request to youtube API
         // Requests with public keys will be made in a dedicated back-end API once it is set up.
         const youtubeApiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
@@ -29,9 +31,26 @@ const apiData = (store) => (next) => (action) => {
             .catch((error) => {
                 // console.log(error);
             })
+        */
+
+        getLatestVideosInfos(5).then(result => {
+            const videos = result;
+            if (typeof videos !== undefined && videos.length > 0) {
+                store.dispatch(saveAllYoutubeVideos(videos));
+            }
+        });
 
         next(action);
         break;  
+    }
+
+    case FETCH_HOME_VIDEO: {
+        getLatestVideosInfos(1).then(result => {
+            const video = result[0];
+            if (typeof video !== undefined && result.length > 0) {
+                store.dispatch(saveHomeVideo(video));
+            }
+        });
     }
 
     case FETCH_ALL_POSTS: {
