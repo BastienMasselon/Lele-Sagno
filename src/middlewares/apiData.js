@@ -1,4 +1,5 @@
 import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, saveAllYoutubeVideos, saveHomeVideo, savePosts, saveRecipes } from "actions/apiData";
+import { setLoading } from "actions/app";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
 
@@ -32,7 +33,7 @@ const apiData = (store) => (next) => (action) => {
                 // console.log(error);
             })
         */
-
+                
         getLatestVideosInfos(5).then(result => {
             const videos = result;
             if (typeof videos !== undefined && videos.length > 0) {
@@ -45,12 +46,17 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_HOME_VIDEO: {
+        // Bug niveau middleware ? Les actions setloading se déclenchent avant les actions fetch...
+        store.dispatch(setLoading('loadingHomeVideo', true));
         getLatestVideosInfos(1).then(result => {
             const video = result[0];
             if (typeof video !== undefined && result.length > 0) {
                 store.dispatch(saveHomeVideo(video));
             }
         });
+        
+        next(action);
+        break;  
     }
 
     case FETCH_ALL_POSTS: {

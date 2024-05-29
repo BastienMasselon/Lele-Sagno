@@ -27,9 +27,10 @@ function App() {
   // getting location 
   const location = useLocation();
 
-  const { loadingPosts } = useSelector((state) => state.data);
+  const { loadingPosts, loadingRecipes, loadingVideos, loadingHomeVideo } = useSelector((state) => state.data);
   const { formSubmitMessage } = useSelector((state) => state.app);
-
+  // const isLoading = loadingPosts || loadingRecipes || loadingVideos || loadingHomeVideo;
+  
   // using location in effect hook to scroll back to the top of the page every time the user switch pages
   useEffect(
     () => {
@@ -39,19 +40,17 @@ function App() {
     // specifying which change triggers the scroll
     [location]
   )
-  
+  // jhbkjb
   useEffect(() => {
     dispatch(fetchAllYoutubeVideos());
-    dispatch(fetchHomeVideo());
     dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
-
+  
+  console.log('homevideo loading ?', loadingHomeVideo);
+  
   return (
     <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-foret-sacre">
-      {loadingPosts && <Loading />}
-
-      {!loadingPosts && (
         <>
           <Header />
     
@@ -72,7 +71,6 @@ function App() {
     
           <Footer />
         </>
-      )}
     </div>
   );
 }

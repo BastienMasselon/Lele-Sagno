@@ -24,3 +24,12 @@ export const changeFormFieldErrorMessage = (formName, field, message) => ({
   field,
   message,
 });
+
+// Set a specific loader (givings its state property name) to true or false
+export const SET_LOADING = 'SET_LOADING';
+export const setLoading = (loaderName, loaderValue) => ({
+  type: SET_LOADING,
+  loaderName,
+  loaderValue,
+});
+

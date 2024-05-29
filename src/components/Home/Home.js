@@ -9,17 +9,19 @@ import fbLogo from 'assets/img/social media/icons8-facebook.svg';
 import instaLogo from 'assets/img/social media/icons8-instagram.svg';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getLatestVideosInfos, setDocumentTitle } from 'utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDocumentTitle } from 'utils/utils';
 import { useEffect } from 'react';
+import { fetchHomeVideo } from 'actions/apiData';
 
 // == Composant
 function Home() {
   setDocumentTitle('Accueil');
-  const { postList, recipeList, homeVideo } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
+  const { postList, recipeList, homeVideo, loadingHomeVideo } = useSelector((state) => state.data);
+
   useEffect(() => {
-    // TODO fetch latest youtube video and add it to app data state
-    const video = getLatestVideosInfos(1);
+    dispatch(fetchHomeVideo());
   }, [])
   
   return (
@@ -140,10 +142,19 @@ function Home() {
 
       <h2 className="font-brandon-fat text-xl text-lele-blue text-center tracking-wider uppercase mt-12 lg:text-2xl">ma dernière vidéo</h2>
 
-      <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
-        {/* TODO : Dynamic id is not working here (must add to the state, set loading etc...) */}
-        <YoutubeEmbed embedId={homeVideo.id !== 'undefined' ? homeVideo.id : 'rCc5isgY5Qc'} />
-      </div>
+      {
+        !loadingHomeVideo && (
+          <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
+            <YoutubeEmbed embedId={homeVideo.id !== undefined ? homeVideo.id : 'T2-V7_gc5Xc'} />
+          </div>
+        )
+      }
+
+      {
+        loadingHomeVideo && (
+          <p className='text-center'>Chargement...</p>
+        )
+      }
 
       <div className='text-xl text-center mt-6 mx-6 lg:text-2xl'>
         <p>Retrouve toutes mes vidéos (recettes, story times, discussions, etc...) sur</p>
