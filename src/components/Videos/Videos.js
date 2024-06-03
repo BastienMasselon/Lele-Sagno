@@ -1,14 +1,22 @@
 // == Import
 
+import { fetchAllYoutubeVideos } from "actions/apiData";
 import YoutubeEmbed from "components/YoutubeEmbed/YoutubeEmbed";
 import DOMPurify from "dompurify";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setDocumentTitle } from "utils/utils";
 
 // == Composant
 function Videos() {
   setDocumentTitle('Vidéos');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllYoutubeVideos());
+  }, []);
+
   const { allYoutubeVideos } = useSelector((state) => state.data);
   return (
     <div className="pt-6 p-2 md:p-8">
@@ -47,7 +55,7 @@ function Videos() {
               )
           })
         ) : (
-          <p className="mt-20 text-lg text-center italic text-lele-blue">Il semblerait que les vidéos de notre chère Lele n'aient pas pu être récupérées. Raffraichissez la page ou bien ré-essayez plus tard!</p>
+          <p className="mt-20 text-lg text-center italic text-lele-blue">Les vidéos de Lele n'ont pas pu être récupérées. Raffraichissez la page ou bien ré-essayez plus tard!</p>
         )
       }
 

@@ -40,15 +40,14 @@ function App() {
     // specifying which change triggers the scroll
     [location]
   )
-  // jhbkjb
+  
   useEffect(() => {
-    dispatch(fetchAllYoutubeVideos());
     dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
   
   console.log('homevideo loading ?', loadingHomeVideo);
-  
+
   return (
     <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-foret-sacre">
         <>
