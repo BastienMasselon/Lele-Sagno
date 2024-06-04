@@ -1,9 +1,12 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, saveAllYoutubeVideos, saveHomeVideo, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, FETCH_POST, fetchError, saveAllYoutubeVideos, saveHomeVideo, savePost, savePosts, saveRecipes } from "actions/apiData";
 import { setLoading } from "actions/app";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
 
 const apiData = (store) => (next) => (action) => {
+
+    const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+
   switch (action.type) {
 
     // fetch all youtube videos from youtube API and save retrieved data in the state
@@ -60,9 +63,8 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_ALL_POSTS: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
         const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image`
-
+        store.dispatch(setLoading('loadingPosts', true));
         // requesting posts to the wordpress API
         axios.get(requestUrl)
             .then((response) => {
@@ -78,8 +80,27 @@ const apiData = (store) => (next) => (action) => {
         break;
     }
 
+    case FETCH_POST : {
+        const requestUrl = `${wordpressDomain}/posts?slug=${action.slug}&_fields=title,content,date`;
+
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200 && response.data.length > 0) {
+                    store.dispatch(savePost(response.data[0]));
+                }
+                if (response.data.length == 0) {
+                    store.dispatch(fetchError('currentPost', 'postError', 'No post found'));
+                }
+            })
+            .catch(error => {
+                store.dispatch(fetchError('currentPost', 'postError', 'Network error'));
+            })
+
+        next(action);
+        break;
+    }
+
     case FETCH_ALL_RECIPES: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
         const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image,acf`
 
         // requesting recipes to the wordpress API

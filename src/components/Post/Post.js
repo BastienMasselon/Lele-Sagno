@@ -1,40 +1,62 @@
 // == Import
+import { useEffect } from 'react';
 import './post.css';
 import arrow from 'assets/img/arrow-down-white.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { findPost } from 'utils/selectors';
 import { makeDatePrettier, setDocumentTitle, unescapeString, unicodeToChar } from 'utils/utils';
+import { fetchPost } from 'actions/apiData';
+import Loading from 'components/Loading/Loading';
 
 // == Composant
 function Post() {
-  const { postList } = useSelector((state) => state.data);
-  // getting the post slug from url
+  const dispatch = useDispatch();
+  const { currentPost, loadingPost, postError } = useSelector((state) => state.data);
+  const post = currentPost;
+  let documentTitle = '';
+
+  if (Object.keys(post).length !== 0) {
+    documentTitle = post.title.rendered
+  }
+  setDocumentTitle(unescapeString(documentTitle));
+
   const { slug } = useParams();
-  // find the post matching the slug
-  const post = findPost(postList, slug);
-  
-  // send user to error page if article does not exist
-  if (!post) {
+  useEffect(() => {
+    dispatch(fetchPost(slug));
+  }, []);
+
+  let formatedDate = '';
+  if (Object.hasOwn(post, 'date')) {
+    formatedDate = makeDatePrettier(post.date);
+  }
+
+  if (postError) {
     return <Navigate to="/error" replace={true} />;
   }
 
-  setDocumentTitle(unescapeString(post.title.rendered));
-  const formatedDate = makeDatePrettier(post.date);
   return (
     <div className="post_container flex flex-col text-lg p-4 lg:py-8">
-      {/* <h1 className="font-brandon-fat uppercase text-xl text-lele-blue mt-4">Non, partir en France ne va pas transformer ta vie en vie de rêve</h1>
-      <div className="mt-5 text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet mauris rhoncus, suscipit ante eu, maximus neque. Nunc id massa sapien. Suspendisse vel orci quis nulla iaculis convallis dictum id orci. Sed convallis, urna sed semper elementum, justo eros auctor nunc, nec bibendum quam eros vel tortor. Pellentesque sit amet urna congue, egestas turpis id, aliquam nunc. Curabitur viverra augue non tortor rutrum, non tincidunt mi euismod. Donec egestas enim sed nulla tincidunt, eu laoreet diam ornare. Quisque vitae consequat orci, quis efficitur erat. Sed cursus orci ac massa porta congue. Suspendisse quis dolor sed sem cursus faucibus eu eget lorem. Maecenas eu sollicitudin diam, vel vehicula nisi. Aliquam erat volutpat. Integer semper mi metus, sed iaculis arcu porttitor eu. Maecenas ut mattis sapien. Ut egestas leo et velit sodales, at ullamcorper leo iaculis. Curabitur consectetur id leo nec mattis.</div>
-      <div className="mt-8 self-end"><span>publié le 6 juin 2023</span></div> */}
-      <h1 
-        className="font-brandon-fat uppercase text-xl text-lele-blue mt-2 self-center"
-        dangerouslySetInnerHTML={{__html: post.title.rendered}}
-      ></h1>
-      <p className='italic text-slate-400 self-center mt-1'><time dateTime={post.date}>{formatedDate}</time></p>
-      <div 
-        dangerouslySetInnerHTML={{__html: post.content.rendered}}
-        className='flex flex-col text-xl max-w-fit lg:w-[800px] lg:mx-auto xl:w-[1000px]'
-      ></div>
+      
+      {loadingPost && (
+        <div className='flex justify-center'>
+          <Loading />
+        </div>
+      )}
+
+      {!loadingPost && (
+      <>
+        <h1 
+          className="font-brandon-fat uppercase text-xl text-lele-blue mt-2 self-center"
+          dangerouslySetInnerHTML={{__html: post.title.rendered}}
+        ></h1>
+        <p className='italic text-slate-400 self-center mt-1'><time dateTime={post.date}>{formatedDate}</time></p>
+        <div 
+          dangerouslySetInnerHTML={{__html: post.content.rendered}}
+          className='flex flex-col text-xl max-w-fit lg:w-[800px] lg:mx-auto xl:w-[1000px]'
+        ></div>
+      </>
+      )}
       <Link 
         className="flex items-center bg-lele-blue text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-8 h-12 shadow-md border-b-[4px] border-[#003c59] hover:border-b-2 lg:mx-auto border-box"
         to="/posts"

@@ -42,7 +42,6 @@ function App() {
   )
   
   useEffect(() => {
-    dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
   

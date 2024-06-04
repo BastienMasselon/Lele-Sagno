@@ -35,6 +35,27 @@ export const savePosts = (postList) => ({
   postList,
 });
 
+// Fetch data of a post from the wordpress API
+export const FETCH_POST = 'FETCH_POST';
+export const fetchPost = (slug) => ({
+  type: FETCH_POST,
+  slug
+});
+
+export const SAVE_POST = 'SAVE_POST';
+export const savePost = (post) => ({
+  type: SAVE_POST,
+  post
+});
+
+export const FETCH_ERROR = 'FETCH_ERROR';
+export const fetchError = (dataName, errorName, error) => ({
+  type: FETCH_ERROR,
+  dataName, // name of the data field in the state (ex : currentPost)
+  errorName, // name of the error field in the state (ex : postError)
+  error // error message (ex : 'Network Error' or 'No post found')
+});
+
 // Fetch data of all recipes from the wordpress API
 export const FETCH_ALL_RECIPES = 'FETCH_ALL_RECIPES';
 export const fetchAllRecipes = () => ({
