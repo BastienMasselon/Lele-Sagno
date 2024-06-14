@@ -23,6 +23,8 @@ function Home() {
   useEffect(() => {
     dispatch(fetchHomeVideo());
   }, [])
+
+  // TODO Fetch Home posts and Home recipes from here
   
   return (
     <div className='lg:py-8'>

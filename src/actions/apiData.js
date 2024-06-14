@@ -68,3 +68,16 @@ export const saveRecipes = (recipeList) => ({
   type: SAVE_RECIPES,
   recipeList,
 });
+
+export const FETCH_RECIPE = 'FETCH_RECIPE';
+export const fetchRecipe = (slug) => ({
+  type: FETCH_RECIPE,
+  slug
+});
+
+export const SAVE_RECIPE = 'SAVE_RECIPE';
+export const saveRecipe = (recipe) => ({
+  type: SAVE_RECIPE,
+  recipe
+});
+

@@ -1,4 +1,4 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, FETCH_POST, fetchError, saveAllYoutubeVideos, saveHomeVideo, savePost, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, FETCH_POST, FETCH_RECIPE, fetchError, saveAllYoutubeVideos, saveHomeVideo, savePost, savePosts, saveRecipe, saveRecipes } from "actions/apiData";
 import { setLoading } from "actions/app";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
@@ -114,6 +114,27 @@ const apiData = (store) => (next) => (action) => {
             }) 
             .catch((error) => {
                 // console.log(error)
+            })
+
+        next(action);
+        break;
+    }
+
+    case FETCH_RECIPE : {
+        store.dispatch(setLoading("loadingRecipe", true));
+        const requestUrl = `${wordpressDomain}/recipes?slug=${action.slug}&_fields=title,content,slug,featured_image,acf`;
+
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200 && response.data.length > 0) {
+                    store.dispatch(saveRecipe(response.data[0]));
+                }
+                if (response.data.length == 0) {
+                    store.dispatch(fetchError('currentRecipe', 'recipeError', 'No recipe found'));
+                }
+            })
+            .catch(error => {
+                store.dispatch(fetchError('currentRecipe', 'recipeError', 'Network error'));
             })
 
         next(action);

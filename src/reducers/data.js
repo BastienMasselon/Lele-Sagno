@@ -1,4 +1,4 @@
-import { FETCH_ERROR, SAVE_ALL_YOUTUBE_VIDEOS, SAVE_HOME_VIDEO, SAVE_POST, SAVE_POSTS, SAVE_RECIPES } from "actions/apiData";
+import { FETCH_ERROR, SAVE_ALL_YOUTUBE_VIDEOS, SAVE_HOME_VIDEO, SAVE_POST, SAVE_POSTS, SAVE_RECIPE, SAVE_RECIPES } from "actions/apiData";
 import { SET_LOADING } from "actions/app";
 
 const initialState = {
@@ -6,11 +6,14 @@ const initialState = {
   postList: [],
   currentPost: {},
   recipeList: [],
+  currentRecipe: {},
   homeVideo: {},
   postError: null,
+  recipeError: null,
   loadingPosts: false,
   loadingPost: true,
   loadingRecipes: false,
+  loadingRecipe: true,
   loadingVideos: false,
   loadingHomeVideo: false,
 };
@@ -56,6 +59,15 @@ function reducer(state = initialState, action = {}) {
         ...state, 
         loadingRecipes: false,
         recipeList: action.recipeList,
+      }
+    }
+
+    case SAVE_RECIPE: {
+      return {
+        ...state,
+        currentRecipe: action.recipe,
+        loadingRecipe: false,
+        recipeError: null,
       }
     }
 
