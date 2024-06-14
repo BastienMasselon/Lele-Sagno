@@ -1,12 +1,12 @@
 // == Import
-import { changeContactSubmitMessage } from 'actions/app';
+import { changeFormSubmitMessage } from 'actions/app';
 import PropTypesLib from 'prop-types';
 import { useDispatch } from 'react-redux';
 // == Composant
 function FormModal({success, message}) {
     const dispatch = useDispatch();
     const handleClickOnCloseModal = () => {
-        dispatch(changeContactSubmitMessage(false, ''));
+        dispatch(changeFormSubmitMessage(false, ''));
     }
     return (
         <div className={`fixed top-1/2 right-0 flex justify-between items-center bg-lele-blue text-white rounded-l-3xl px-4 pl-4 py-2 w-52 shadow-lg ${success ? "bg-lele-blue" : "bg-lele-orange"}`}>

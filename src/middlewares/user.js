@@ -1,7 +1,8 @@
-import { SUBMIT_CONTACT_FORM, changeFieldValue } from "actions/user";
+import { SUBMIT_CONTACT_FORM, SUBMIT_NEWSLETTER_FORM, changeFieldValue } from "actions/user";
 import emailjs from '@emailjs/browser';
 import DOMPurify, { sanitize } from "dompurify";
-import { changeContactSubmitMessage} from "actions/app";
+import { changeFormSubmitMessage} from "actions/app";
+import axios from "axios";
 
 const user = (store) => (next) => (action) => {
   switch (action.type) {
@@ -28,7 +29,6 @@ const user = (store) => (next) => (action) => {
         // https://dashboard.emailjs.com/admin
         emailjs.send('contact_service', 'contact_form', templateParams, EmailJSApiKey)
             .then((response) => {
-                console.log(response);
                 // if request is successfull
                 if (response.status === 200) {
                     // emptying form fields
@@ -36,12 +36,52 @@ const user = (store) => (next) => (action) => {
                     store.dispatch(changeFieldValue('contactName', ''));
                     store.dispatch(changeFieldValue('contactContent', ''));
                     // Opening modal to notify user the message has been successfully sent
-                    store.dispatch(changeContactSubmitMessage(true, 'Votre message a bien été envoyé à Lele Sagno'));
+                    store.dispatch(changeFormSubmitMessage(true, 'Votre message a bien été envoyé à Lele Sagno'));
                 }
             }, (error) => {
                 // Notifying the user that the message couldn't be sent.
-                store.dispatch(changeContactSubmitMessage(false, "Votre message n'a pas pu être envoyé. Veuillez ré-essayer."));
+                store.dispatch(changeFormSubmitMessage(false, "Votre message n'a pas pu être envoyé. Veuillez ré-essayer."));
             });
+
+        next(action);
+        break;
+    }
+
+
+    // handles the newsletter subscription form
+    case SUBMIT_NEWSLETTER_FORM : {
+        const { app: {newsletterEmail}} = store.getState();
+        const sanitizedNewsletterEmail = DOMPurify.sanitize(newsletterEmail);
+        const requestUrl = process.env.REACT_APP_WP_NEWSLETTER_API_DOMAIN + 'subscribers';
+        const auth = {
+            username: process.env.REACT_APP_WP_NEWSLETTER_CLIENT_KEY,
+            password: process.env.REACT_APP_WP_NEWSLETTER_CLIENT_SECRET,
+        }
+        const data = {
+            email: sanitizedNewsletterEmail,
+            status: "confirmed",
+        }
+        
+        // 201 : successfully created
+        // 200 : statut de retour qui est utilisé si l'email est déjà parmi les subscribers (renvoit pas de 400 au final)
+        // 400 : email address already exists
+        // 401 : authentication is missing or invalid
+        axios.post(requestUrl, data, { auth: auth })
+            .then((response) => {
+                if ( [200, 201].includes(response.status) ) {
+                    store.dispatch(changeFormSubmitMessage(true, `l'adresse ${sanitizedNewsletterEmail} a bien été ajoutée à la liste de diffusion`));
+                    store.dispatch(changeFieldValue('newsletterEmail', ''));
+                }
+                else {
+                    store.dispatch(changeFormSubmitMessage(true, 'désolé, l\'adresse n\'a pas pu être ajoutée. Veuillez essayer à nouveau ou nous contacter si le problème persiste'))
+                }
+            })
+            .catch((error) => {
+                store.dispatch(changeFormSubmitMessage(true, 'l\'adresse n\'a pas pu être ajoutée. Veuillez essayer à nouveau ou nous contacter si le problème persiste'))
+            })
+
+        next(action);
+        break;
     }
 
     default:

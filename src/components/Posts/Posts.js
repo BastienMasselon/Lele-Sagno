@@ -1,29 +1,43 @@
 // == Import
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PostCard from "./PostCard/PostCard";
 import noImage from "assets/img/empty-image.png";
+import { setDocumentTitle } from "utils/utils";
+import { useEffect } from "react";
+import { fetchAllPosts } from "actions/apiData";
+import Loading from "components/Loading/Loading";
 
 // == Composant
 function Posts() {
-    const { postList } = useSelector((state) => state.data);
+  setDocumentTitle('Publications');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllPosts());
+  }, []);
+    
+  const { postList, loadingPosts } = useSelector((state) => state.data);
 
   return (
-    <div className="flex flex-col px-4">
-        <h1 className='font-brandon-fat uppercase tracking-wider text-lele-blue text-center text-xl mt-8'>Société, bien-être, expériences... Je te partage mes pensées et mes folles aventures 😄</h1>
-      {
-        postList.map( (post) =>
-            <PostCard
-                // should use recipe's id as key
-                key={post.id}
-                thumbnail={post._embedded && post._embedded["wp:featuredmedia"] ? post._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
-                title={post.title.rendered}
-                publishedDate={post.date}
-                postId={post.id}
-                slug={post.slug}
-            />
-        )
-      }
+    <div className="px-4 md:py-6">
+        <h1 className='font-brandon-fat uppercase tracking-wider text-lele-blue text-center text-xl my-8'>Société, bien-être, expériences... Je te partage mes pensées et mes folles aventures 😄</h1>
+        <div className='flex flex-col gap-8 md:flex-row md:flex-wrap md:justify-center'>
+        { loadingPosts && <Loading />}
+        {
+          !loadingPosts && postList.map( (post) =>
+              <PostCard
+                  // should use recipe's id as key
+                  key={post.id}
+                  thumbnail={post.featured_image ? post.featured_image : noImage}
+                  title={post.title.rendered}
+                  publishedDate={post.date}
+                  postId={post.id}
+                  slug={post.slug}
+              />
+          )
+        }
+      </div>
     </div>
   );
 }

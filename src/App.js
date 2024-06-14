@@ -5,7 +5,7 @@ import './styles/wordpress/style.min.css';
 
 // Components
 import { useEffect } from 'react';
-import { fetchAllPosts, fetchAllRecipes, fetchAllYoutubeVideos } from 'actions/apiData';
+import { fetchAllPosts, fetchAllRecipes, fetchAllYoutubeVideos, fetchHomeVideo } from 'actions/apiData';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -18,6 +18,7 @@ import Post from 'components/Post/Post';
 import Recipe from 'components/Recipe/Recipe';
 import Loading from 'components/Loading/Loading';
 import Error from 'components/Error/Error';
+import FormModal from 'components/FormModal/FormModal';
 
 function App() {
   // using dispatch hook to be able (to call store) to dispatch actions at any moment
@@ -26,8 +27,10 @@ function App() {
   // getting location 
   const location = useLocation();
 
-  const { loadingPosts } = useSelector((state) => state.data);
-
+  const { loadingPosts, loadingRecipes, loadingVideos, loadingHomeVideo } = useSelector((state) => state.data);
+  const { formSubmitMessage } = useSelector((state) => state.app);
+  // const isLoading = loadingPosts || loadingRecipes || loadingVideos || loadingHomeVideo;
+  
   // using location in effect hook to scroll back to the top of the page every time the user switch pages
   useEffect(
     () => {
@@ -39,22 +42,17 @@ function App() {
   )
   
   useEffect(() => {
-    dispatch(fetchAllYoutubeVideos());
-    dispatch(fetchAllPosts());
     dispatch(fetchAllRecipes());
   }, []);
-
-
+  
+  console.log('homevideo loading ?', loadingHomeVideo);
 
   return (
-    <div className="App font-brandon flex flex-col min-h-screen justify-between">
-      {loadingPosts && <Loading />}
-
-      {!loadingPosts && (
+    <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-foret-sacre">
         <>
           <Header />
     
-          <main className="mt-16">
+          <main className="mt-16 max-w-[1800px] lg:w-9/12 bg-white lg:m-auto lg:my-20 lg:shadow-[0_0_40px_15px_rgba(0,0,0,0.3)] lg:rounded-sm">
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/videos" element={<Videos />} />
@@ -65,11 +63,12 @@ function App() {
               <Route path="/recipe/:slug" element={<Recipe />} />
               <Route path="*" element={<Error />} />
             </Routes>
+
+            {(formSubmitMessage.text !== '') && <FormModal success={formSubmitMessage.success} message={formSubmitMessage.text} />}
           </main>
     
           <Footer />
         </>
-      )}
     </div>
   );
 }

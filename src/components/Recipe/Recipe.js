@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { findPost } from 'utils/selectors';
 import noImage from "assets/img/empty-image.png";
+import { setDocumentTitle, unescapeString } from 'utils/utils';
 
 // == Composant
 function Recipe() {
@@ -13,18 +14,19 @@ function Recipe() {
   const { slug } = useParams();
   // find the recipe matching the slug
   const recipe = findPost(recipeList, slug);
-  console.log(recipe);
   
   // send user to error page if recipe does not exist
   if (!recipe) {
     return <Navigate to="/error" replace={true} />;
   }
+
+  setDocumentTitle(unescapeString(recipe.title.rendered));
   return (
-    <div className="recipe_container flex flex-col p-4">
-        <div className='w-full rounded-lg relative'>
+    <div className="recipe_container flex flex-col p-4 lg:py-8">
+        <div className='w-full rounded-lg relative md:w-[600px] md:mx-auto'>
             <img 
-                className='object-cover h-64 w-full rounded-lg'
-                src={recipe._embedded && recipe._embedded["wp:featuredmedia"] ? recipe._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url : noImage}
+                className='object-cover h-64 w-full rounded-lg md:h-80 lg:h-96'
+                src={recipe.featured_image ? recipe.featured_image : noImage}
             />
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 italic text-center text-white [text-shadow:_0_1px_5px_rgb(0_0_0_/_100%)] bg-black/40 w-full py-1 px-2 text-2xl'>
                 <h1 dangerouslySetInnerHTML={{__html: recipe.title.rendered}}></h1>
@@ -44,9 +46,9 @@ function Recipe() {
                 </div>
             </div>
         </div>
-      <div className="flex flex-col mt-5 text-xl" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
+      <div className="flex flex-col max-w-fit mt-5 text-xl lg:w-[800px] lg:mx-auto xl:w-[1000px]" dangerouslySetInnerHTML={{__html: recipe.content.rendered}}></div>
       <Link 
-        className="flex items-center bg-lele-orange text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-10 h-12 shadow-md"
+        className="flex items-center bg-lele-orange text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-10 h-12 shadow-md border-b-[4px] border-[#99540c] hover:border-b-2 lg:mx-auto border-box"
         to="/recipes"
       >
         <img 

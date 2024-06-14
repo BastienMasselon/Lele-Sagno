@@ -1,12 +1,18 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, saveAllYoutubeVideos, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, FETCH_POST, fetchError, saveAllYoutubeVideos, saveHomeVideo, savePost, savePosts, saveRecipes } from "actions/apiData";
+import { setLoading } from "actions/app";
 import axios from "axios";
+import { getLatestVideosInfos } from "utils/utils";
 
 const apiData = (store) => (next) => (action) => {
+
+    const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+
   switch (action.type) {
 
     // fetch all youtube videos from youtube API and save retrieved data in the state
     case FETCH_ALL_YOUTUBE_VIDEOS: {
         
+        /*
         // preparing request to youtube API
         // Requests with public keys will be made in a dedicated back-end API once it is set up.
         const youtubeApiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
@@ -26,16 +32,39 @@ const apiData = (store) => (next) => (action) => {
                     store.dispatch(saveAllYoutubeVideos(filteredVideos));
                 }
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // console.log(error);
+            })
+        */
+                
+        getLatestVideosInfos(5).then(result => {
+            const videos = result;
+            if (typeof videos !== undefined && videos.length > 0) {
+                store.dispatch(saveAllYoutubeVideos(videos));
+            }
+        });
 
         next(action);
         break;  
     }
 
-    case FETCH_ALL_POSTS: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
-        const requestUrl = `${wordpressDomain}/posts?_embed`
+    case FETCH_HOME_VIDEO: {
+        // Bug niveau middleware ? Les actions setloading se déclenchent avant les actions fetch...
+        store.dispatch(setLoading('loadingHomeVideo', true));
+        getLatestVideosInfos(1).then(result => {
+            const video = result[0];
+            if (typeof video !== undefined && result.length > 0) {
+                store.dispatch(saveHomeVideo(video));
+            }
+        });
+        
+        next(action);
+        break;  
+    }
 
+    case FETCH_ALL_POSTS: {
+        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image`
+        store.dispatch(setLoading('loadingPosts', true));
         // requesting posts to the wordpress API
         axios.get(requestUrl)
             .then((response) => {
@@ -44,13 +73,35 @@ const apiData = (store) => (next) => (action) => {
                 }
             }) 
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
             })
+
+        next(action);
+        break;
+    }
+
+    case FETCH_POST : {
+        const requestUrl = `${wordpressDomain}/posts?slug=${action.slug}&_fields=title,content,date`;
+
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200 && response.data.length > 0) {
+                    store.dispatch(savePost(response.data[0]));
+                }
+                if (response.data.length == 0) {
+                    store.dispatch(fetchError('currentPost', 'postError', 'No post found'));
+                }
+            })
+            .catch(error => {
+                store.dispatch(fetchError('currentPost', 'postError', 'Network error'));
+            })
+
+        next(action);
+        break;
     }
 
     case FETCH_ALL_RECIPES: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
-        const requestUrl = `${wordpressDomain}/recipes?_embed`
+        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image,acf`
 
         // requesting recipes to the wordpress API
         axios.get(requestUrl)
@@ -60,8 +111,11 @@ const apiData = (store) => (next) => (action) => {
                 }
             }) 
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
             })
+
+        next(action);
+        break;
     }
 
     default:
