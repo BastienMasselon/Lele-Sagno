@@ -81,6 +81,7 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_POST : {
+        store.dispatch(setLoading("loadingPost", true));
         const requestUrl = `${wordpressDomain}/posts?slug=${action.slug}&_fields=title,content,date`;
 
         axios.get(requestUrl)
@@ -101,6 +102,7 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_ALL_RECIPES: {
+        store.dispatch(setLoading('loadingRecipes', true));
         const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image,acf`
 
         // requesting recipes to the wordpress API

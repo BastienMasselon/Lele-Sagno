@@ -41,10 +41,6 @@ function App() {
     [location]
   )
   
-  useEffect(() => {
-    dispatch(fetchAllRecipes());
-  }, []);
-  
   console.log('homevideo loading ?', loadingHomeVideo);
 
   return (
