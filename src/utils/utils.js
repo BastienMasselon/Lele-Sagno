@@ -55,11 +55,11 @@ export function unescapeString(str) {
 export async function getLatestVideosInfos(limit) {
   const cid = 'UCDXo3PHjEJrIa_2aZ6vxToQ';
   // Get latest videos with rss api in xml
-  const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}`)
+  const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}&part=id`)
   // Preparing rss2json API request to convert xml to json object
   const reqURL = `https://api.rss2json.com/v1/api.json?rss_url=${channelURL}`;
 
-  const videos = [];
+  let videos = [];
 
   // const promise = await fetch(reqURL);
   // const result = await promise.json();
@@ -76,19 +76,22 @@ export async function getLatestVideosInfos(limit) {
   // return videos
 
   await fetch(reqURL)
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok === false) throw new Error('Network issue')
+      return response.json();
+    })
     .then(result => {
-        for (let i = 0 ; i < limit ; i++) {
-          // Extracting info from Json response
-          let videoLink = result.items[i].link;
-          let currentVideo = {
-            link: videoLink,
-            id: videoLink.substr(videoLink.indexOf("=") + 1),
-            title: result.items[i].title
-          };
-          videos.push(currentVideo);
-        }
-      });
+      for (let i = 0 ; i < limit ; i++) {
+        // Extracting info from Json response
+        let videoLink = result.items[i].link;
+        let currentVideo = {
+          link: videoLink,
+          id: videoLink.substr(videoLink.indexOf("=") + 1),
+          title: result.items[i].title
+        };
+        videos.push(currentVideo);
+      }
+    });
 
   return videos;
 }

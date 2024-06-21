@@ -10,11 +10,12 @@ const initialState = {
   homeVideo: {},
   postError: null,
   recipeError: null,
+  videosError: null,
   loadingPosts: false,
   loadingPost: true,
   loadingRecipes: false,
   loadingRecipe: true,
-  loadingVideos: false,
+  loadingVideos: true,
   loadingHomeVideo: false,
 };
 
@@ -26,6 +27,7 @@ function reducer(state = initialState, action = {}) {
           ...state,
           allYoutubeVideos: action.allYoutubeVideos,
           loadingVideos: false,
+          videosError: null,
       }
     }
 

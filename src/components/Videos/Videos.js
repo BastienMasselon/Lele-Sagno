@@ -1,6 +1,7 @@
 // == Import
 
 import { fetchAllYoutubeVideos } from "actions/apiData";
+import Loading from "components/Loading/Loading";
 import YoutubeEmbed from "components/YoutubeEmbed/YoutubeEmbed";
 import DOMPurify from "dompurify";
 import { useEffect } from "react";
@@ -17,7 +18,7 @@ function Videos() {
     dispatch(fetchAllYoutubeVideos());
   }, []);
 
-  const { allYoutubeVideos } = useSelector((state) => state.data);
+  const { allYoutubeVideos, loadingVideos, videosError} = useSelector((state) => state.data);
   return (
     <div className="pt-6 p-2 md:p-8">
       <p className="text-xl text-center">Ici, tu trouveras mes dernières vidéos. Tu peux voir plus de vidéos sur <span className="text-lele-blue font-brandon-med underline">
@@ -30,9 +31,15 @@ function Videos() {
             </Link>
         </span>!
       </p>
+      
+      {loadingVideos && (
+        <div className='flex justify-center'>
+          <Loading />
+        </div>
+      )}
 
       { 
-        allYoutubeVideos.length > 0 ? (
+        !loadingVideos && allYoutubeVideos.length > 0 && (
           allYoutubeVideos.map((video) => {
             // sanitizing title as it will be put as a not safe inner html
             const title = DOMPurify.sanitize(video.title);
@@ -54,8 +61,12 @@ function Videos() {
                 </div>
               )
           })
-        ) : (
-          <p className="mt-20 text-lg text-center italic text-lele-blue">Les vidéos de Lele n'ont pas pu être récupérées. Raffraichissez la page ou bien ré-essayez plus tard!</p>
+        ) 
+      }
+
+      {
+        !loadingVideos && videosError !== null && (
+            <p className="mt-20 text-lg text-center italic text-lele-blue">Les vidéos de Lele n'ont pas pu être récupérées. Raffraichissez la page ou bien ré-essayez plus tard!</p>
         )
       }
 

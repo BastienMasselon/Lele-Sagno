@@ -36,13 +36,21 @@ const apiData = (store) => (next) => (action) => {
                 // console.log(error);
             })
         */
-                
-        getLatestVideosInfos(5).then(result => {
-            const videos = result;
-            if (typeof videos !== undefined && videos.length > 0) {
-                store.dispatch(saveAllYoutubeVideos(videos));
-            }
-        });
+        store.dispatch(setLoading('loadingVideos', true));
+        
+        getLatestVideosInfos(5)
+            .then(result => {
+                const videos = result;
+                if (typeof videos !== undefined && videos.length > 0) {
+                    store.dispatch(saveAllYoutubeVideos(videos));
+                }    
+            })
+            .catch((error) => {
+                store.dispatch(fetchError('allYoutubeVideos', 'videosError', 'Network Error'))
+            })
+            .finally(() => {
+                store.dispatch(setLoading('loadingVideos', false));
+            })
 
         next(action);
         break;  
