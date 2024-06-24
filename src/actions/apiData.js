@@ -22,6 +22,28 @@ export const saveHomeVideo = (homeVideo) => ({
   homeVideo,
 });
 
+export const FETCH_HOME_POSTS = 'FETCH_HOME_POSTS';
+export const fetchHomePosts = () => ({
+  type: FETCH_HOME_POSTS,
+});
+
+export const SAVE_HOME_POSTS = 'SAVE_HOME_POSTS';
+export const saveHomePosts = (postList) => ({
+  type: SAVE_HOME_POSTS,
+  postList
+});
+
+export const FETCH_HOME_RECIPES = 'FETCH_HOME_RECIPES';
+export const fetchHomeRecipes = () => ({
+  type: FETCH_HOME_RECIPES,
+});
+
+export const SAVE_HOME_RECIPES = 'SAVE_HOME_RECIPES';
+export const saveHomeRecipes = (recipeList) => ({
+  type: SAVE_HOME_RECIPES,
+  recipeList,
+});
+
 // Fetch data of all posts from the wordpress API
 export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
 export const fetchAllPosts = () => ({

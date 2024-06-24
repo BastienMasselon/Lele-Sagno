@@ -12,19 +12,23 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDocumentTitle } from 'utils/utils';
 import { useEffect } from 'react';
-import { fetchHomeVideo } from 'actions/apiData';
+import { fetchHomePosts, fetchHomeRecipes, fetchHomeVideo } from 'actions/apiData';
 
 // == Composant
 function Home() {
   setDocumentTitle('Accueil');
   const dispatch = useDispatch();
-  const { postList, recipeList, homeVideo, loadingHomeVideo } = useSelector((state) => state.data);
+  const { homePosts, homeRecipes, homeVideo, loadingHomeVideo } = useSelector((state) => state.data);
 
   useEffect(() => {
     dispatch(fetchHomeVideo());
+    dispatch(fetchHomePosts());
+    dispatch(fetchHomeRecipes());
   }, [])
 
+  // Fetch Home picture and Verse from here
   // TODO Fetch Home posts and Home recipes from here
+  console.log(homePosts, homeRecipes);
   
   return (
     <div className='lg:py-8'>
@@ -50,7 +54,7 @@ function Home() {
                   to='https://www.facebook.com/lelesagno'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={fbLogo}></img>
               </Link>
@@ -58,7 +62,7 @@ function Home() {
                   to='https://www.instagram.com/lelesagno/'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={instaLogo}></img>
               </Link>
@@ -66,7 +70,7 @@ function Home() {
                   to='https://www.youtube.com/@lelesagno1187'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={youtubeLogo}></img>
               </Link>
@@ -93,7 +97,7 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={postList}
+            data={homePosts}
           />
       </section>
 
@@ -118,7 +122,7 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={recipeList}
+            data={homeRecipes}
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
             postType='recipe'

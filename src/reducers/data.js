@@ -1,7 +1,11 @@
-import { FETCH_ERROR, SAVE_ALL_YOUTUBE_VIDEOS, SAVE_HOME_VIDEO, SAVE_POST, SAVE_POSTS, SAVE_RECIPE, SAVE_RECIPES } from "actions/apiData";
+import { FETCH_ERROR, SAVE_ALL_YOUTUBE_VIDEOS, SAVE_HOME_POSTS, SAVE_HOME_RECIPES, SAVE_HOME_VIDEO, SAVE_POST, SAVE_POSTS, SAVE_RECIPE, SAVE_RECIPES } from "actions/apiData";
 import { SET_LOADING } from "actions/app";
 
 const initialState = {
+  homePosts: [],
+  homeRecipes: [],
+  homeVerse: {},
+  homePicture: {},
   allYoutubeVideos: [],
   postList: [],
   currentPost: {},
@@ -11,16 +15,26 @@ const initialState = {
   postError: null,
   recipeError: null,
   videosError: null,
+  loadingHomePosts: true,
+  loadingHomeRecipes: true,
+  loadingHomeVideo: false,
   loadingPosts: false,
   loadingPost: true,
   loadingRecipes: false,
   loadingRecipe: true,
   loadingVideos: true,
-  loadingHomeVideo: false,
 };
 
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+
+    case SAVE_HOME_POSTS: {
+      return {
+        ...state, 
+        homePosts: action.postList,
+        loadingHomePosts: false,
+      }
+    }
 
     case SAVE_ALL_YOUTUBE_VIDEOS: {
       return {
@@ -53,6 +67,14 @@ function reducer(state = initialState, action = {}) {
         currentPost: action.post,
         loadingPost: false,
         postError: null,
+      }
+    }
+
+    case SAVE_HOME_RECIPES: {
+      return {
+        ...state,
+        homeRecipes: action.recipeList,
+        loadingHomeRecipes: false,
       }
     }
 

@@ -1,4 +1,4 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, FETCH_POST, FETCH_RECIPE, fetchError, saveAllYoutubeVideos, saveHomeVideo, savePost, savePosts, saveRecipe, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_POSTS, FETCH_HOME_RECIPES, FETCH_HOME_VIDEO, FETCH_POST, FETCH_RECIPE, fetchError, saveAllYoutubeVideos, saveHomePosts, saveHomeRecipes, saveHomeVideo, savePost, savePosts, saveRecipe, saveRecipes } from "actions/apiData";
 import { setLoading } from "actions/app";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
@@ -70,6 +70,25 @@ const apiData = (store) => (next) => (action) => {
         break;  
     }
 
+    case FETCH_HOME_POSTS: {
+        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image&per_page=5`
+        store.dispatch(setLoading('loadingHomePosts', true));
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(saveHomePosts(response.data));
+                }
+            }) 
+            .catch((error) => {
+                // console.log(error)
+            })
+
+        next(action);
+        break;
+    }
+
     case FETCH_ALL_POSTS: {
         const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image`
         store.dispatch(setLoading('loadingPosts', true));
@@ -103,6 +122,26 @@ const apiData = (store) => (next) => (action) => {
             })
             .catch(error => {
                 store.dispatch(fetchError('currentPost', 'postError', 'Network error'));
+            })
+
+        next(action);
+        break;
+    }
+
+    case FETCH_HOME_RECIPES: {
+        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image&per_page=5`
+        store.dispatch(setLoading('loadingHomeRecipes', true));
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response);
+                    store.dispatch(saveHomeRecipes(response.data));
+                }
+            }) 
+            .catch((error) => {
+                // console.log(error)
             })
 
         next(action);
