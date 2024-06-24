@@ -18,7 +18,7 @@ import { fetchHomePosts, fetchHomeRecipes, fetchHomeVideo } from 'actions/apiDat
 function Home() {
   setDocumentTitle('Accueil');
   const dispatch = useDispatch();
-  const { homePosts, homeRecipes, homeVideo, loadingHomeVideo } = useSelector((state) => state.data);
+  const { homePosts, homeRecipes, homeVideo, loadingHomePosts, loadingHomeRecipes, loadingHomeVideo } = useSelector((state) => state.data);
 
   useEffect(() => {
     dispatch(fetchHomeVideo());
@@ -98,6 +98,7 @@ function Home() {
       <section className='mt-4'>
           <SlideNav 
             data={homePosts}
+            isDataLoading={loadingHomePosts}
           />
       </section>
 
@@ -126,6 +127,7 @@ function Home() {
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
             postType='recipe'
+            isDataLoading={loadingHomeRecipes}
           />
       </section>
 

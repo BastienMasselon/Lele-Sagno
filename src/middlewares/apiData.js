@@ -71,7 +71,7 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_HOME_POSTS: {
-        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image&per_page=5`
+        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,slug,featured_image&per_page=5`
         store.dispatch(setLoading('loadingHomePosts', true));
 
         // requesting posts to the wordpress API
@@ -129,7 +129,7 @@ const apiData = (store) => (next) => (action) => {
     }
 
     case FETCH_HOME_RECIPES: {
-        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image&per_page=5`
+        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,slug,featured_image&per_page=5`
         store.dispatch(setLoading('loadingHomeRecipes', true));
 
         // requesting posts to the wordpress API

@@ -48,6 +48,16 @@ export function unescapeString(str) {
 }
 
 /**
+ * 
+ * @param {string} classProperty 
+ * @param {string} value 
+ * @returns {string} string concatenation (usable for a tailwind class)
+ */
+export function toTailwindClass(classProperty, value) {
+  if (typeof classProperty === 'string' && typeof value ==='string') return classProperty + '-' + value;
+}
+
+/**
  * Get latest youtube video infos from Lele Sagno's channel
  * @param {int} limit // number of videos (max : 10)
  * @return {array} an array of video ids sorted by date (desc)
