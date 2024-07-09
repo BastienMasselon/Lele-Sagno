@@ -26,10 +26,8 @@ function Home() {
     dispatch(fetchHomeRecipes());
   }, [])
 
-  // Fetch Home picture and Verse from here
-  // TODO Fetch Home posts and Home recipes from here
-  console.log(homePosts, homeRecipes);
-  
+  // TODO Fetch Home picture and Verse from here
+
   return (
     <div className='lg:py-8'>
 
@@ -83,8 +81,13 @@ function Home() {
       
       <h2 className="font-brandon-fat px-2 text-xl text-lele-orange text-center tracking-wider uppercase mt-10 lg:text-2xl">Verset du moment</h2>
 
-      <section className="relative text-xl mt-4 overflow-hidden md:max-w-[700px] md:max-h-[700px] md:mx-auto md:rounded lg:max-w-[700px]">
-        <img src={verseBackground} alt="inspirational landscape" />
+      <section 
+        style={{
+          backgroundImage: `url(${verseBackground})`,
+        }}  
+        className="relative text-xl mt-4 overflow-hidden w-full h-96 md:max-h-[700px] md:mx-auto md:rounded bg-cover bg-fixed"
+      >
+        {/* <img src={verseBackground} className='bg-fixed' alt="inspirational landscape" /> */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)] object-cover">
           <p className="italic mb-4 lg:text-2xl">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
           <p className="text-lg lg:text-xl">Jérémie 29 : 11</p>
