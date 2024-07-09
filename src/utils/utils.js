@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { $CombinedState } from 'redux';
 
 /**
  * Formates a date in french 
@@ -47,6 +48,16 @@ export function unescapeString(str) {
 }
 
 /**
+ * 
+ * @param {string} classProperty 
+ * @param {string} value 
+ * @returns {string} string concatenation (usable for a tailwind class)
+ */
+export function toTailwindClass(classProperty, value) {
+  if (typeof classProperty === 'string' && typeof value ==='string') return classProperty + '-' + value;
+}
+
+/**
  * Get latest youtube video infos from Lele Sagno's channel
  * @param {int} limit // number of videos (max : 10)
  * @return {array} an array of video ids sorted by date (desc)
@@ -54,11 +65,11 @@ export function unescapeString(str) {
 export async function getLatestVideosInfos(limit) {
   const cid = 'UCDXo3PHjEJrIa_2aZ6vxToQ';
   // Get latest videos with rss api in xml
-  const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}`)
+  const channelURL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${cid}&part=id`)
   // Preparing rss2json API request to convert xml to json object
   const reqURL = `https://api.rss2json.com/v1/api.json?rss_url=${channelURL}`;
 
-  const videos = [];
+  let videos = [];
 
   // const promise = await fetch(reqURL);
   // const result = await promise.json();
@@ -75,19 +86,22 @@ export async function getLatestVideosInfos(limit) {
   // return videos
 
   await fetch(reqURL)
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok === false) throw new Error('Network issue')
+      return response.json();
+    })
     .then(result => {
-        for (let i = 0 ; i < limit ; i++) {
-          // Extracting info from Json response
-          let videoLink = result.items[i].link;
-          let currentVideo = {
-            link: videoLink,
-            id: videoLink.substr(videoLink.indexOf("=") + 1),
-            title: result.items[i].title
-          };
-          videos.push(currentVideo);
-        }
-      });
+      for (let i = 0 ; i < limit ; i++) {
+        // Extracting info from Json response
+        let videoLink = result.items[i].link;
+        let currentVideo = {
+          link: videoLink,
+          id: videoLink.substr(videoLink.indexOf("=") + 1),
+          title: result.items[i].title
+        };
+        videos.push(currentVideo);
+      }
+    });
 
   return videos;
 }

@@ -9,19 +9,25 @@ import fbLogo from 'assets/img/social media/icons8-facebook.svg';
 import instaLogo from 'assets/img/social media/icons8-instagram.svg';
 import youtubeLogo from 'assets/img/social media/icons8-youtube.svg';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getLatestVideosInfos, setDocumentTitle } from 'utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDocumentTitle } from 'utils/utils';
 import { useEffect } from 'react';
+import { fetchHomePosts, fetchHomeRecipes, fetchHomeVideo } from 'actions/apiData';
 
 // == Composant
 function Home() {
   setDocumentTitle('Accueil');
-  const { postList, recipeList, homeVideo } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
+  const { homePosts, homeRecipes, homeVideo, loadingHomePosts, loadingHomeRecipes, loadingHomeVideo } = useSelector((state) => state.data);
+
   useEffect(() => {
-    // TODO fetch latest youtube video and add it to app data state
-    const video = getLatestVideosInfos(1);
+    dispatch(fetchHomeVideo());
+    dispatch(fetchHomePosts());
+    dispatch(fetchHomeRecipes());
   }, [])
-  
+
+  // TODO Fetch Home picture and Verse from here
+
   return (
     <div className='lg:py-8'>
 
@@ -46,7 +52,7 @@ function Home() {
                   to='https://www.facebook.com/lelesagno'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={fbLogo}></img>
               </Link>
@@ -54,7 +60,7 @@ function Home() {
                   to='https://www.instagram.com/lelesagno/'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={instaLogo}></img>
               </Link>
@@ -62,7 +68,7 @@ function Home() {
                   to='https://www.youtube.com/@lelesagno1187'
                   target='_blank'
                   rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 bg-lele-orange rounded-full hover:bg-lele-blue'
+                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
               >
                   <img src={youtubeLogo}></img>
               </Link>
@@ -75,8 +81,13 @@ function Home() {
       
       <h2 className="font-brandon-fat px-2 text-xl text-lele-orange text-center tracking-wider uppercase mt-10 lg:text-2xl">Verset du moment</h2>
 
-      <section className="relative text-xl mt-4 overflow-hidden md:max-w-[700px] md:max-h-[700px] md:mx-auto md:rounded lg:max-w-[700px]">
-        <img src={verseBackground} alt="inspirational landscape" />
+      <section 
+        style={{
+          backgroundImage: `url(${verseBackground})`,
+        }}  
+        className="relative text-xl mt-4 overflow-hidden w-full h-96 md:max-h-[700px] md:mx-auto md:rounded bg-cover bg-fixed"
+      >
+        {/* <img src={verseBackground} className='bg-fixed' alt="inspirational landscape" /> */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)] object-cover">
           <p className="italic mb-4 lg:text-2xl">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
           <p className="text-lg lg:text-xl">Jérémie 29 : 11</p>
@@ -89,7 +100,8 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={postList}
+            data={homePosts}
+            isDataLoading={loadingHomePosts}
           />
       </section>
 
@@ -114,10 +126,11 @@ function Home() {
 
       <section className='mt-4'>
           <SlideNav 
-            data={recipeList}
+            data={homeRecipes}
             bgColor={'lele-orange'}
             buttonsColor={'lele-blue'}
             postType='recipe'
+            isDataLoading={loadingHomeRecipes}
           />
       </section>
 
@@ -140,10 +153,19 @@ function Home() {
 
       <h2 className="font-brandon-fat text-xl text-lele-blue text-center tracking-wider uppercase mt-12 lg:text-2xl">ma dernière vidéo</h2>
 
-      <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
-        {/* TODO : Dynamic id is not working here (must add to the state, set loading etc...) */}
-        <YoutubeEmbed embedId={homeVideo.id !== 'undefined' ? homeVideo.id : 'rCc5isgY5Qc'} />
-      </div>
+      {
+        !loadingHomeVideo && (
+          <div className='w-full h-96 mt-4 md:max-w-[800px] md:mx-auto'>
+            <YoutubeEmbed embedId={homeVideo.id !== undefined ? homeVideo.id : 'T2-V7_gc5Xc'} />
+          </div>
+        )
+      }
+
+      {
+        loadingHomeVideo && (
+          <p className='text-center'>Chargement...</p>
+        )
+      }
 
       <div className='text-xl text-center mt-6 mx-6 lg:text-2xl'>
         <p>Retrouve toutes mes vidéos (recettes, story times, discussions, etc...) sur</p>

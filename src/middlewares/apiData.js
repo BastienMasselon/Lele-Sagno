@@ -1,8 +1,12 @@
-import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_VIDEO, saveAllYoutubeVideos, saveHomeVideo, savePosts, saveRecipes } from "actions/apiData";
+import { FETCH_ALL_POSTS, FETCH_ALL_RECIPES, FETCH_ALL_YOUTUBE_VIDEOS, FETCH_HOME_POSTS, FETCH_HOME_RECIPES, FETCH_HOME_VIDEO, FETCH_POST, FETCH_RECIPE, fetchError, saveAllYoutubeVideos, saveHomePosts, saveHomeRecipes, saveHomeVideo, savePost, savePosts, saveRecipe, saveRecipes } from "actions/apiData";
+import { setLoading } from "actions/app";
 import axios from "axios";
 import { getLatestVideosInfos } from "utils/utils";
 
 const apiData = (store) => (next) => (action) => {
+
+    const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+
   switch (action.type) {
 
     // fetch all youtube videos from youtube API and save retrieved data in the state
@@ -32,31 +36,62 @@ const apiData = (store) => (next) => (action) => {
                 // console.log(error);
             })
         */
-
-        getLatestVideosInfos(5).then(result => {
-            const videos = result;
-            if (typeof videos !== undefined && videos.length > 0) {
-                store.dispatch(saveAllYoutubeVideos(videos));
-            }
-        });
+        store.dispatch(setLoading('loadingVideos', true));
+        
+        getLatestVideosInfos(5)
+            .then(result => {
+                const videos = result;
+                if (typeof videos !== undefined && videos.length > 0) {
+                    store.dispatch(saveAllYoutubeVideos(videos));
+                }    
+            })
+            .catch((error) => {
+                store.dispatch(fetchError('allYoutubeVideos', 'videosError', 'Network Error'))
+            })
+            .finally(() => {
+                store.dispatch(setLoading('loadingVideos', false));
+            })
 
         next(action);
         break;  
     }
 
     case FETCH_HOME_VIDEO: {
+        // Bug niveau middleware ? Les actions setloading se déclenchent avant les actions fetch...
+        store.dispatch(setLoading('loadingHomeVideo', true));
         getLatestVideosInfos(1).then(result => {
             const video = result[0];
             if (typeof video !== undefined && result.length > 0) {
                 store.dispatch(saveHomeVideo(video));
             }
         });
+        
+        next(action);
+        break;  
+    }
+
+    case FETCH_HOME_POSTS: {
+        const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,slug,featured_image&per_page=5`
+        store.dispatch(setLoading('loadingHomePosts', true));
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(saveHomePosts(response.data));
+                }
+            }) 
+            .catch((error) => {
+                // console.log(error)
+            })
+
+        next(action);
+        break;
     }
 
     case FETCH_ALL_POSTS: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
         const requestUrl = `${wordpressDomain}/posts?_fields=id,title.rendered,content.rendered,date,slug,featured_image`
-
+        store.dispatch(setLoading('loadingPosts', true));
         // requesting posts to the wordpress API
         axios.get(requestUrl)
             .then((response) => {
@@ -72,8 +107,48 @@ const apiData = (store) => (next) => (action) => {
         break;
     }
 
+    case FETCH_POST : {
+        store.dispatch(setLoading("loadingPost", true));
+        const requestUrl = `${wordpressDomain}/posts?slug=${action.slug}&_fields=title,content,date`;
+
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200 && response.data.length > 0) {
+                    store.dispatch(savePost(response.data[0]));
+                }
+                if (response.data.length == 0) {
+                    store.dispatch(fetchError('currentPost', 'postError', 'No post found'));
+                }
+            })
+            .catch(error => {
+                store.dispatch(fetchError('currentPost', 'postError', 'Network error'));
+            })
+
+        next(action);
+        break;
+    }
+
+    case FETCH_HOME_RECIPES: {
+        const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,slug,featured_image&per_page=5`
+        store.dispatch(setLoading('loadingHomeRecipes', true));
+
+        // requesting posts to the wordpress API
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200) {
+                    store.dispatch(saveHomeRecipes(response.data));
+                }
+            }) 
+            .catch((error) => {
+                // console.log(error)
+            })
+
+        next(action);
+        break;
+    }
+
     case FETCH_ALL_RECIPES: {
-        const wordpressDomain = process.env.REACT_APP_WP_API_DOMAIN;
+        store.dispatch(setLoading('loadingRecipes', true));
         const requestUrl = `${wordpressDomain}/recipes?_fields=id,title.rendered,content.rendered,date,slug,featured_image,acf`
 
         // requesting recipes to the wordpress API
@@ -85,6 +160,27 @@ const apiData = (store) => (next) => (action) => {
             }) 
             .catch((error) => {
                 // console.log(error)
+            })
+
+        next(action);
+        break;
+    }
+
+    case FETCH_RECIPE : {
+        store.dispatch(setLoading("loadingRecipe", true));
+        const requestUrl = `${wordpressDomain}/recipes?slug=${action.slug}&_fields=title,content,slug,featured_image,acf`;
+
+        axios.get(requestUrl)
+            .then((response) => {
+                if (response.status === 200 && response.data.length > 0) {
+                    store.dispatch(saveRecipe(response.data[0]));
+                }
+                if (response.data.length == 0) {
+                    store.dispatch(fetchError('currentRecipe', 'recipeError', 'No recipe found'));
+                }
+            })
+            .catch(error => {
+                store.dispatch(fetchError('currentRecipe', 'recipeError', 'Network error'));
             })
 
         next(action);

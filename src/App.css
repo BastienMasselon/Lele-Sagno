@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    --lele-orange: #FB9119;
+    --lele-blue: #02547C;
+}
+
 @font-face {
     font-family: "BRANDON-LIGHT";
     src: url("./assets/fonts/Brandon/Brandon_light.otf");

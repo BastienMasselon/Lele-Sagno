@@ -22,6 +22,28 @@ export const saveHomeVideo = (homeVideo) => ({
   homeVideo,
 });
 
+export const FETCH_HOME_POSTS = 'FETCH_HOME_POSTS';
+export const fetchHomePosts = () => ({
+  type: FETCH_HOME_POSTS,
+});
+
+export const SAVE_HOME_POSTS = 'SAVE_HOME_POSTS';
+export const saveHomePosts = (postList) => ({
+  type: SAVE_HOME_POSTS,
+  postList
+});
+
+export const FETCH_HOME_RECIPES = 'FETCH_HOME_RECIPES';
+export const fetchHomeRecipes = () => ({
+  type: FETCH_HOME_RECIPES,
+});
+
+export const SAVE_HOME_RECIPES = 'SAVE_HOME_RECIPES';
+export const saveHomeRecipes = (recipeList) => ({
+  type: SAVE_HOME_RECIPES,
+  recipeList,
+});
+
 // Fetch data of all posts from the wordpress API
 export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
 export const fetchAllPosts = () => ({
@@ -33,6 +55,27 @@ export const SAVE_POSTS = 'SAVE_POSTS';
 export const savePosts = (postList) => ({
   type: SAVE_POSTS,
   postList,
+});
+
+// Fetch data of a post from the wordpress API
+export const FETCH_POST = 'FETCH_POST';
+export const fetchPost = (slug) => ({
+  type: FETCH_POST,
+  slug
+});
+
+export const SAVE_POST = 'SAVE_POST';
+export const savePost = (post) => ({
+  type: SAVE_POST,
+  post
+});
+
+export const FETCH_ERROR = 'FETCH_ERROR';
+export const fetchError = (dataName, errorName, error) => ({
+  type: FETCH_ERROR,
+  dataName, // name of the data field in the state (ex : currentPost)
+  errorName, // name of the error field in the state (ex : postError)
+  error // error message (ex : 'Network Error' or 'No post found')
 });
 
 // Fetch data of all recipes from the wordpress API
@@ -47,3 +90,16 @@ export const saveRecipes = (recipeList) => ({
   type: SAVE_RECIPES,
   recipeList,
 });
+
+export const FETCH_RECIPE = 'FETCH_RECIPE';
+export const fetchRecipe = (slug) => ({
+  type: FETCH_RECIPE,
+  slug
+});
+
+export const SAVE_RECIPE = 'SAVE_RECIPE';
+export const saveRecipe = (recipe) => ({
+  type: SAVE_RECIPE,
+  recipe
+});
+
