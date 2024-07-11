@@ -21,3 +21,10 @@ html {
     font-family: "BRANDON-BLD";
     src: url("./assets/fonts/Brandon/Brandon_bld.otf");
 }
+
+.shell {
+    width: full;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}

@@ -1,4 +1,5 @@
 // == Import
+import "./home.css";
 import verseBackground from 'assets/img/porto.JPG';
 import arrowBlack from 'assets/img/arrow-down.svg';
 import arrowWhite from 'assets/img/arrow-down-white.svg';
@@ -29,49 +30,52 @@ function Home() {
   // TODO Fetch Home picture and Verse from here
 
   return (
-    <div className='lg:py-8'>
+    <div className='w-full'>
 
       {/* == Introduction section == */}
-      <section className="text-xl text-center w-fit md:flex md:p-6 md:justify-center md:mx-auto">
-        <div className='md:w-1/2'>
-          <img
-            className="object-cover h-96 w-full md:rounded md:max-w-[500px]"
-            src={leleHomePicture}
-            alt="Lele Sagno"
-          >
-          </img>
-        </div>
-        <div className='m-4 mt- md:w-1/2 md:m-4 md:max-w-[500px]'>
-          <h1 className='mb-4 md:text-2xl'>
-            Hello! My name is Lele Sagno, bienvenue dans mon monde! Ici je partage des idées, des recettes et tu peux aussi retrouver mes vidéos!
-          </h1>
-          <div className='mt-6'>
-            <p className='font-brandon-med md:text-2xl'>Suivez moi :</p>
-            <div className='flex center justify-center gap-6 mt-4 lg:items-center lg:gap-1'>
-              <Link 
-                  to='https://www.facebook.com/lelesagno'
-                  target='_blank'
-                  rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
-              >
-                  <img src={fbLogo}></img>
-              </Link>
-              <Link
-                  to='https://www.instagram.com/lelesagno/'
-                  target='_blank'
-                  rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
-              >
-                  <img src={instaLogo}></img>
-              </Link>
-              <Link
-                  to='https://www.youtube.com/@lelesagno1187'
-                  target='_blank'
-                  rel="noopener noreferrer"
-                  className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
-              >
-                  <img src={youtubeLogo}></img>
-              </Link>
+
+      <section className='w-full pt-8 bg-slate-200'>
+        <div className="shell text-xl text-center md:flex md:justify-center">
+          <div className='md:w-1/2'>
+            <img
+              className="object-cover h-96 w-full md:rounded md:max-w-[500px]"
+              src={leleHomePicture}
+              alt="Lele Sagno"
+            >
+            </img>
+          </div>
+          <div className='m-4 mt- md:w-1/2 md:m-4 md:max-w-[500px]'>
+            <h1 className='mb-4 md:text-2xl'>
+              Hello! My name is Lele Sagno, bienvenue dans mon monde! Ici je partage des idées, des recettes et tu peux aussi retrouver mes vidéos!
+            </h1>
+            <div className='mt-6'>
+              <p className='font-brandon-med md:text-2xl'>Suivez moi :</p>
+              <div className='flex center justify-center gap-6 mt-4 lg:items-center lg:gap-1'>
+                <Link
+                    to='https://www.facebook.com/lelesagno'
+                    target='_blank'
+                    rel="noopener noreferrer"
+                    className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
+                >
+                    <img src={fbLogo}></img>
+                </Link>
+                <Link
+                    to='https://www.instagram.com/lelesagno/'
+                    target='_blank'
+                    rel="noopener noreferrer"
+                    className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
+                >
+                    <img src={instaLogo}></img>
+                </Link>
+                <Link
+                    to='https://www.youtube.com/@lelesagno1187'
+                    target='_blank'
+                    rel="noopener noreferrer"
+                    className='w-10 h-10 p-1 lg:mx-3 transition duration-[400ms] bg-lele-orange rounded-full hover:bg-lele-blue'
+                >
+                    <img src={youtubeLogo}></img>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -79,18 +83,19 @@ function Home() {
 
       {/* == Daily verse section == */}
       
-      <h2 className="font-brandon-fat px-2 text-xl text-lele-orange text-center tracking-wider uppercase mt-10 lg:text-2xl">Verset du moment</h2>
+      <h2 className="font-brandon-fat px-2 text-xl text-lele-orange text-center tracking-wider uppercase mt-10 mb-6 lg:text-2xl">Verset du moment</h2>
 
-      <section 
-        style={{
-          backgroundImage: `url(${verseBackground})`,
-        }}  
-        className="relative text-xl mt-4 overflow-hidden w-full h-96 md:max-h-[700px] md:mx-auto md:rounded bg-cover bg-fixed"
-      >
-        {/* <img src={verseBackground} className='bg-fixed' alt="inspirational landscape" /> */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)] object-cover">
-          <p className="italic mb-4 lg:text-2xl">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
-          <p className="text-lg lg:text-xl">Jérémie 29 : 11</p>
+      <section className="w-full bg-black">
+        <div
+          style={{
+            backgroundImage: `url(${verseBackground})`,
+          }}
+          className="shell home-verse relative text-xl mt-4 overflow-hidden w-full h-96 md:max-h-[700px] md:mx-auto bg-cover bg-fixed"
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-2 bg-black/40 text-center text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)] object-cover">
+            <p className="italic mb-4 lg:text-2xl">"Car je connais les projets que j'ai formés sur vous, dit l'Eternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
+            <p className="text-lg lg:text-xl">Jérémie 29 : 11</p>
+          </div>
         </div>
       </section>
 
