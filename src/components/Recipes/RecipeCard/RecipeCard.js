@@ -8,7 +8,7 @@ function RecipeCard({ thumbnail, title, preparationTime, recipeId, slug}) {
   return (
     <Link
         to={`/recipe/${slug}`}
-        className="overflow-hidden bg-lele-blue/5 rounded-xl rounded-bl-sm md:w-2/5 xl:w-[30%] 2xl:w-[20%]"
+        className="overflow-hidden bg-lele-blue/5 rounded-xl rounded-bl-sm md:w-2/5 xl:w-[30%]"
     >
       <div className='w-full'>
         <img 

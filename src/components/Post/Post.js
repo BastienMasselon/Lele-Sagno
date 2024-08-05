@@ -36,38 +36,39 @@ function Post() {
   }
 
   return (
-    <div className="post_container flex flex-col text-lg p-4 lg:py-8">
+    <section className="py-10 lg:py-0">
+      <div className="shell bg-white post_container flex flex-col text-lg p-4 lg:py-8">
       
-      {loadingPost && (
-        <div className='flex justify-center'>
-          <Loading />
-        </div>
-      )}
-
-      {!loadingPost && (
-      <>
-        <h1 
-          className="font-brandon-fat uppercase text-xl text-lele-blue mt-2 self-center"
-          dangerouslySetInnerHTML={{__html: post.title.rendered}}
-        ></h1>
-        <p className='italic text-slate-400 self-center mt-1'><time dateTime={post.date}>{formatedDate}</time></p>
-        <div 
-          dangerouslySetInnerHTML={{__html: post.content.rendered}}
-          className='flex flex-col text-xl max-w-fit lg:w-[800px] lg:mx-auto xl:w-[1000px]'
-        ></div>
-      </>
-      )}
-      <Link 
-        className="flex items-center bg-lele-blue text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-8 h-12 shadow-md border-b-[4px] border-[#003c59] hover:border-b-2 lg:mx-auto border-box"
-        to="/posts"
-      >
-        <img 
-            src={arrow}
-            className='w-5 rotate-90'
-        />
-        <p className='ml-1'>Toutes mes publications</p>
-      </Link>
-    </div>
+        {loadingPost && (
+          <div className='flex justify-center'>
+            <Loading />
+          </div>
+        )}
+        {!loadingPost && (
+        <>
+          <h1
+            className="font-brandon-fat uppercase text-xl text-lele-blue mt-2 self-center text-center"
+            dangerouslySetInnerHTML={{__html: post.title.rendered}}
+          ></h1>
+          <p className='italic text-slate-400 self-center mt-1'><time dateTime={post.date}>{formatedDate}</time></p>
+          <div
+            className='flex flex-col text-xl max-w-fit px-3 lg:px-6'
+            dangerouslySetInnerHTML={{__html: post.content.rendered}}
+          ></div>
+        </>
+        )}
+        <Link
+          className="flex items-center bg-lele-blue text-white w-fit p-3 rounded-lg font-brandon-med text-lg mt-8 mx-3 h-12 shadow-md border-b-[4px] border-[#003c59] hover:border-b-2 lg:mx-auto border-box"
+          to="/posts"
+        >
+          <img
+              src={arrow}
+              className='w-5 rotate-90'
+          />
+          <p className='ml-1'>Toutes mes publications</p>
+        </Link>
+      </div>
+    </section>
   );
 }
 

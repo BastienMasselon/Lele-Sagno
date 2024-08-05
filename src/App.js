@@ -29,26 +29,20 @@ function App() {
 
   const { loadingPosts, loadingRecipes, loadingVideos, loadingHomeVideo } = useSelector((state) => state.data);
   const { formSubmitMessage } = useSelector((state) => state.app);
-  // const isLoading = loadingPosts || loadingRecipes || loadingVideos || loadingHomeVideo;
   
-  // using location in effect hook to scroll back to the top of the page every time the user switch pages
   useEffect(
     () => {
-      // scroll to top of the page
       window.scrollTo(0, 0)
     },
-    // specifying which change triggers the scroll
     [location]
   )
   
-  console.log('homevideo loading ?', loadingHomeVideo);
-
   return (
-    <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-foret-sacre">
+    <div className="App font-brandon flex flex-col min-h-screen justify-between lg:bg-black">
         <>
           <Header />
     
-          <main className="mt-16 max-w-[1800px] lg:w-9/12 bg-white lg:m-auto lg:my-20 lg:shadow-[0_0_40px_15px_rgba(0,0,0,0.3)] lg:rounded-sm">
+          <main className="w-full bg-white lg:m-auto">
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/videos" element={<Videos />} />
